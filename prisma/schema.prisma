@@ -1,108 +1,107 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id                Int             @id @default(autoincrement())
-  username          String          @unique
-  email             String          @unique
-  password          String
-  role              Role
-  createdAt         DateTime        @default(now())
-  modifiedAt        DateTime        @default(now()) @updatedAt
-  deletedAt         DateTime?
-  passwordUpdatedAt DateTime?
-  userBoardGames    UserBoardGame[]
+    id                Int             @id @default(autoincrement())
+    username          String          @unique
+    email             String          @unique
+    password          String
+    role              Role
+    createdAt         DateTime        @default(now())
+    modifiedAt        DateTime        @default(now()) @updatedAt
+    deletedAt         DateTime?
+    passwordUpdatedAt DateTime?
+    userBoardGames    UserBoardGame[]
 }
 
 model BoardGame {
-  id                  Int                 @id @default(autoincrement())
-  title               String
-  slug                String              @unique @db.VarChar(191)
-  publisherName       String // Will expand into profiles later
-  designerName        String // Will expand into profiles later
-  minPlayers          Int
-  maxPlayers          Int
-  createdAt           DateTime            @default(now())
-  modifiedAt          DateTime            @default(now()) @updatedAt
-  deletedAt           DateTime?
-  userBoardGames      UserBoardGame[]
-  boardGameCategories BoardGameCategory[]
-  boardGameMechanics  BoardGameMechanic[]
+    id                  Int                 @id @default(autoincrement())
+    title               String
+    slug                String              @unique @db.VarChar(191)
+    publisherName       String // Will expand into profiles later
+    designerName        String // Will expand into profiles later
+    minPlayers          Int
+    maxPlayers          Int
+    createdAt           DateTime            @default(now())
+    modifiedAt          DateTime            @default(now()) @updatedAt
+    deletedAt           DateTime?
+    userBoardGames      UserBoardGame[]
+    boardGameCategories BoardGameCategory[]
+    boardGameMechanics  BoardGameMechanic[]
 
-  @@index([title])
+    @@index([title])
 }
 
 model UserBoardGame {
-  id          Int       @id @default(autoincrement())
-  userId      Int
-  boardGameId Int
-  rating      Int?
-  status      State?
-  notes       String?
-  createdAt   DateTime  @default(now())
-  modifiedAt  DateTime  @default(now()) @updatedAt
-  deletedAt   DateTime?
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
+    id          Int       @id @default(autoincrement())
+    userId      Int
+    boardGameId Int
+    rating      Int?
+    status      State?
+    notes       String?
+    createdAt   DateTime  @default(now())
+    modifiedAt  DateTime  @default(now()) @updatedAt
+    deletedAt   DateTime?
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, boardGameId])
-  @@index([status])
-  @@index([rating])
+    @@unique([userId, boardGameId])
+    @@index([status])
+    @@index([rating])
 }
 
 model Category {
-  id                  Int                 @id @default(autoincrement())
-  title               String              @unique @db.VarChar(191)
-  createdAt           DateTime            @default(now())
-  modifiedAt          DateTime            @default(now()) @updatedAt
-  deletedAt           DateTime?
-  boardGameCategories BoardGameCategory[]
+    id                  Int                 @id @default(autoincrement())
+    title               String              @unique @db.VarChar(191)
+    createdAt           DateTime            @default(now())
+    modifiedAt          DateTime            @default(now()) @updatedAt
+    deletedAt           DateTime?
+    boardGameCategories BoardGameCategory[]
 }
 
 model BoardGameCategory {
-  categoryId  Int
-  boardGameId Int
-  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
+    categoryId  Int
+    boardGameId Int
+    category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
 
-  @@id([categoryId, boardGameId])
+    @@id([categoryId, boardGameId])
 }
 
 model Mechanic {
-  id                 Int                 @id @default(autoincrement())
-  title              String              @unique @db.VarChar(191)
-  createdAt          DateTime            @default(now())
-  modifiedAt         DateTime            @default(now()) @updatedAt
-  deletedAt          DateTime?
-  boardGameMechanics BoardGameMechanic[]
+    id                 Int                 @id @default(autoincrement())
+    title              String              @unique @db.VarChar(191)
+    createdAt          DateTime            @default(now())
+    modifiedAt         DateTime            @default(now()) @updatedAt
+    deletedAt          DateTime?
+    boardGameMechanics BoardGameMechanic[]
 }
 
 model BoardGameMechanic {
-  mechanicId  Int
-  boardGameId Int
-  mechanic    Mechanic  @relation(fields: [mechanicId], references: [id], onDelete: Cascade)
-  boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
+    mechanicId  Int
+    boardGameId Int
+    mechanic    Mechanic  @relation(fields: [mechanicId], references: [id], onDelete: Cascade)
+    boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
 
-  @@id([mechanicId, boardGameId])
+    @@id([mechanicId, boardGameId])
 }
 
 enum Role {
-  ADMIN
-  USER
-  PUBLISHER
-  DESIGNER
+    ADMIN
+    USER
+    PUBLISHER
+    DESIGNER
 }
 
 enum State {
-  OWNED
-  PREVIOUSLY_OWNED
-  WANT_PLAY
-  WANT_BUY
+    OWNED
+    PREVIOUSLY_OWNED
+    WANT_PLAY
+    WANT_BUY
 }
