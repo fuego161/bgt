@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { UserSeed } from "./seeds/UserSeed";
 import { BoardGameSeed } from "./seeds/BoardGameSeed";
 import { CategorySeed } from "./seeds/CategorySeed";
+import { MechanicSeed } from "./seeds/MechanicSeed";
 
 const prisma = new PrismaClient();
 
@@ -11,6 +12,7 @@ async function main() {
 
 	const boardGameSeed = new BoardGameSeed().createSeedData();
 	const categorySeed = new CategorySeed().createSeedData();
+	const mechanicSeed = new MechanicSeed().createSeedData();
 
 	console.log(`Seeding: Users | ${usersData.length} Records`);
 	await Promise.all(
@@ -41,6 +43,17 @@ async function main() {
 				where: { slug: category.slug },
 				update: {},
 				create: category,
+			})
+		)
+	);
+
+	console.log(`Seeding: Mechanic | ${mechanicSeed.length} Records`);
+	await Promise.all(
+		mechanicSeed.map((mechanic) =>
+			prisma.mechanic.upsert({
+				where: { slug: mechanic.slug },
+				update: {},
+				create: mechanic,
 			})
 		)
 	);
