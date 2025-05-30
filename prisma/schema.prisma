@@ -59,6 +59,7 @@ model UserBoardGame {
 model Category {
     id                  Int                 @id @default(autoincrement())
     title               String              @unique @db.VarChar(191)
+    slug                String              @unique @db.VarChar(191)
     createdAt           DateTime            @default(now())
     modifiedAt          DateTime            @default(now()) @updatedAt
     deletedAt           DateTime?
@@ -77,6 +78,7 @@ model BoardGameCategory {
 model Mechanic {
     id                 Int                 @id @default(autoincrement())
     title              String              @unique @db.VarChar(191)
+    slug               String              @unique @db.VarChar(191)
     createdAt          DateTime            @default(now())
     modifiedAt         DateTime            @default(now()) @updatedAt
     deletedAt          DateTime?
