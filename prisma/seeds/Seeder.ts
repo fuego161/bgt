@@ -41,4 +41,14 @@ export class Seeder {
 			.replace(/\s+/g, separator)
 			.toLocaleLowerCase();
 	}
+
+	generateTitleWithSlug(
+		title: string,
+		separator = "-"
+	): { title: string; slug: string } {
+		return {
+			title: title,
+			slug: this.slugify(title, separator),
+		};
+	}
 }
