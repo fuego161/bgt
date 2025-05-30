@@ -10,7 +10,7 @@ async function main() {
 
 	const boardGameSeed = new BoardGameSeed().createSeedData();
 
-	console.log("Seeding: Users");
+	console.log(`Seeding: Users | ${usersData.length} Records`);
 	await Promise.all(
 		usersData.map((user) =>
 			prisma.user.upsert({
@@ -21,7 +21,7 @@ async function main() {
 		)
 	);
 
-	console.log("Seeding: Board Games");
+	console.log(`Seeding: Board Games | ${boardGameSeed.length} Records`);
 	await Promise.all(
 		boardGameSeed.map((game) =>
 			prisma.boardGame.upsert({
