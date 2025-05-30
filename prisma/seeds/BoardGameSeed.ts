@@ -1,3 +1,5 @@
+import { Seeder } from './Seeder';
+
 interface BoardGameData {
 	title: string;
 	slug: string;
@@ -7,48 +9,9 @@ interface BoardGameData {
 	maxPlayers: number;
 }
 
-export class BoardGameSeed {
-	private characterMap = {
-		$: "dollar",
-		"%": "percent",
-		"&": "and",
-		"<": "less",
-		">": "greater",
-		"|": "or",
-		"¢": "cent",
-		"£": "pound",
-		"¥": "yen",
-		"©": "(c)",
-		"®": "(r)",
-		"–": "-",
-		"‘": "'",
-		"’": "'",
-		"“": '"',
-		"”": '"',
-		"„": '"',
-		"•": "*",
-		"…": "...",
-	};
-
-	constructor() {}
-
-	private slugify(title: string, separator = "-"): string {
-		return title
-			.trim()
-			.normalize("NFC")
-			.split("")
-			.reduce((result, character) => {
-				const newCharacter = character in this.characterMap
-					? this.characterMap[
-							character as keyof typeof this.characterMap
-					  ]
-					: character;
-
-				return result + newCharacter;
-			}, "")
-			.replace(/[^\w\s$*_+~.'"\-]+/g, "")
-			.replace(/\s+/g, separator)
-			.toLocaleLowerCase();
+export class BoardGameSeed extends Seeder {
+	constructor() {
+		super();
 	}
 
 	createSeedData(): BoardGameData[] {
