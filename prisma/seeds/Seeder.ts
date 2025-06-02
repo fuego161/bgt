@@ -51,4 +51,47 @@ export class Seeder {
 			slug: this.slugify(title, separator),
 		};
 	}
+
+	/**
+	 * Links a board game to multiple children (e.g. categories, mechanics)
+	 *
+	 * @param seedData The array which link objects will be pushed to
+	 * @param gameSlug The slug of the game we're looking for
+	 * @param childSlugs The slugs of the children to link
+	 * @param gameMap A map of game slugs to their IDs
+	 * @param childMap A map of child slugs to their IDs
+	 * @param childKey The key representing the child in the link object
+	 */
+	linkBoardGameToMany<T extends { boardGameId: number }>(
+		seedData: T[],
+		gameSlug: string,
+		childSlugs: string[],
+		gameMap: Map<string, number>,
+		childMap: Map<string, number>,
+		childKey: keyof T
+	) {
+		// Attempt to get the game ID from the game map
+		const gameId = gameMap.get(gameSlug);
+
+		// If the game slug wasn't present within the game map, throw an error
+		if (!gameId) throw new Error(`Missing Game: ${gameSlug}`);
+
+		// Loop each child slug
+		for (const childSlug of childSlugs) {
+			// Attempt to get the child ID from the child map
+			const childId = childMap.get(childSlug);
+
+			// If the child slug wasn't present within the child map, throw an error
+			if (!childId)
+				throw new Error(
+					`Missing Child: ${childSlug} | On Game: ${gameSlug}`
+				);
+
+			// If it was connect the parent ID to the child ID
+			seedData.push({
+				boardGameId: gameId,
+				[childKey]: childId,
+			} as T);
+		}
+	}
 }

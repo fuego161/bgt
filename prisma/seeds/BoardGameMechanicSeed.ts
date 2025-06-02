@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { Seeder } from "./Seeder";
 
 const prisma = new PrismaClient();
 
@@ -7,99 +8,73 @@ interface BoardGameMechanicData {
 	mechanicId: number;
 }
 
-export class BoardGameMechanicSeed {
-	constructor() {}
-
-	private addMechanicLinks(
-		seedData: BoardGameMechanicData[],
-		gameSlug: string,
-		mechanicSlugs: string[],
-		gameMap: Map<string, number>,
-		mechanicMap: Map<string, number>
-	) {
-		const gameId = gameMap.get(gameSlug);
-
-		if (!gameId) throw new Error(`Missing Game: ${gameSlug}`);
-
-		for (const mechanicSlug of mechanicSlugs) {
-			const mechanicId = mechanicMap.get(mechanicSlug);
-
-			if (!mechanicId)
-				throw new Error(
-					`Missing Mechanic: ${mechanicSlug} | On Game: ${gameSlug}`
-				);
-
-			seedData.push({
-				boardGameId: gameId,
-				mechanicId: mechanicId,
-			});
-		}
-	}
+export class BoardGameMechanicSeed extends Seeder {
+	// The data we're going to seed into the BoardGameMechanic table
+	private toLink = [
+		{
+			gameSlug: "arcs",
+			mechanicSlugs: [
+				"area-majority-influence",
+				"area-movement",
+				"campaign-battle-card-driven",
+				"dice-rolling",
+				"die-icon-resolution",
+				"hand-management",
+				"take-that",
+				"trick-taking",
+				"turn-order-claim-action",
+				"variable-player-powers",
+			],
+		},
+		{
+			gameSlug: "bananagrams",
+			mechanicSlugs: ["race", "spelling", "tile-placement"],
+		},
+		{
+			gameSlug: "blue-lagoon",
+			mechanicSlugs: [
+				"area-majority-influence",
+				"chaining",
+				"connections",
+				"end-game-bonuses",
+				"hexagon-grid",
+				"network-and-route-building",
+				"score-and-reset-game",
+				"set-collection",
+				"variable-set-up",
+			],
+		},
+	];
 
 	async createSeedData() {
+		// Set an array which will hold the link objects
 		const seedData: BoardGameMechanicData[] = [];
 
+		// Get all mechanics
 		const mechanics = await prisma.mechanic.findMany();
+		// Map mechanic slugs to ids
 		const mechanicMap = new Map(mechanics.map((m) => [m.slug, m.id]));
 
+		// Get a collection of games
 		const games = await prisma.boardGame.findMany({
 			where: {
-				OR: [
-					{ slug: "arcs" },
-					{ slug: "bananagrams" },
-					{ slug: "blue-lagoon" },
-				],
+				OR: this.toLink.map((link) => {
+					return { slug: link.gameSlug };
+				}),
 			},
 		});
+		// Map game slugs to ids
 		const gameMap = new Map(games.map((g) => [g.slug, g.id]));
 
-		const toLink = [
-			{
-				gameSlug: "arcs",
-				mechanicSlugs: [
-					'area-majority-influence',
-					'area-movement',
-					'campaign-battle-card-driven',
-					'dice-rolling',
-					'die-icon-resolution',
-					'hand-management',
-					'take-that',
-					'trick-taking',
-					'turn-order-claim-action',
-					'variable-player-powers',
-				],
-			},
-			{
-				gameSlug: "bananagrams",
-				mechanicSlugs: [
-					"race",
-					"spelling",
-					"tile-placement",
-				],
-			},
-			{
-				gameSlug: "blue-lagoon",
-				mechanicSlugs: [
-					"area-majority-influence",
-					"chaining",
-					"connections",
-					"end-game-bonuses",
-					"hexagon-grid",
-					"network-and-route-building",
-					"score-and-reset-game",
-					"set-collection",
-					"variable-set-up",
-				],
-			},
-		];
-
-		for (const mechanicLink of toLink) {
-			this.addMechanicLinks(
+		// Loop each item we want to link
+		for (const mechanicLink of this.toLink) {
+			this.linkBoardGameToMany<BoardGameMechanicData>(
 				seedData,
 				mechanicLink.gameSlug,
 				mechanicLink.mechanicSlugs,
 				gameMap,
-				mechanicMap
+				mechanicMap,
+				"mechanicId"
 			);
 		}
 
