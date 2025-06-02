@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { boardGameData } from './seeds/BoardGameSeedData';
 import { UserSeed } from "./seeds/UserSeed";
-import { BoardGameSeed } from "./seeds/BoardGameSeed";
 import { CategorySeed } from "./seeds/CategorySeed";
 import { MechanicSeed } from "./seeds/MechanicSeed";
 import { BoardGameCategorySeed } from "./seeds/BoardGameCategorySeed";
@@ -13,15 +12,11 @@ async function main() {
 	const userSeed = new UserSeed(10);
 	const usersData = await userSeed.createSeedData();
 
-	const boardGameSeed = new BoardGameSeed().createSeedData();
 	const categorySeed = new CategorySeed().createSeedData();
 	const mechanicSeed = new MechanicSeed().createSeedData();
 
 	const boardGameCategorySeed = new BoardGameCategorySeed(boardGameData);
-	const boardGameCategoryData = await boardGameCategorySeed.createSeedData();
-
 	const boardGameMechanicSeed = new BoardGameMechanicSeed(boardGameData);
-	const boardGameMechanicData = await boardGameMechanicSeed.createSeedData();
 
 	console.log(`Seeding: Users | ${usersData.length} Records`);
 	await Promise.all(
@@ -34,13 +29,20 @@ async function main() {
 		)
 	);
 
-	console.log(`Seeding: Board Games | ${boardGameSeed.length} Records`);
+	console.log(`Seeding: Board Games | ${boardGameData.length} Records`);
 	await Promise.all(
-		boardGameSeed.map((game) =>
+		boardGameData.map((game) =>
 			prisma.boardGame.upsert({
 				where: { slug: game.slug },
 				update: {},
-				create: game,
+				create: {
+					title: game.title,
+					slug: game.slug,
+					publisherName: game.publisherName,
+					designerName: game.designerName,
+					minPlayers: game.minPlayers,
+					maxPlayers: game.maxPlayers,
+				},
 			})
 		)
 	);
@@ -67,6 +69,7 @@ async function main() {
 		)
 	);
 
+	const boardGameCategoryData = await boardGameCategorySeed.createSeedData();
 	console.log(
 		`Seeding: Board Game Categories | ${boardGameCategoryData.length} Records`
 	);
@@ -85,6 +88,7 @@ async function main() {
 		)
 	);
 
+	const boardGameMechanicData = await boardGameMechanicSeed.createSeedData();
 	console.log(
 		`Seeding: Board Game Mechanics | ${boardGameMechanicData.length} Records`
 	);

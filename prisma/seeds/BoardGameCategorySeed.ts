@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Seeder } from "./Seeder";
-import { BoardGameSeedData } from "@/types/board-game-seed";
+import { BoardGameSeedData } from "@/types/board-game";
 
 const prisma = new PrismaClient();
 
@@ -27,7 +27,7 @@ export class BoardGameCategorySeed extends Seeder {
 		const games = await prisma.boardGame.findMany({
 			where: {
 				OR: this.toLink.map((link) => {
-					return { slug: link.gameSlug };
+					return { slug: link.slug };
 				}),
 			},
 		});
@@ -38,7 +38,7 @@ export class BoardGameCategorySeed extends Seeder {
 		for (const categoryLink of this.toLink) {
 			this.linkBoardGameToMany<BoardGameCategoryData>(
 				seedData,
-				categoryLink.gameSlug,
+				categoryLink.slug,
 				categoryLink.categorySlugs,
 				gameMap,
 				categoryMap,
