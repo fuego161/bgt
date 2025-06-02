@@ -91,7 +91,7 @@ model BoardGameMechanic {
     mechanic    Mechanic  @relation(fields: [mechanicId], references: [id], onDelete: Cascade)
     boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
 
-    @@id([mechanicId, boardGameId])
+    @@id(name: "boardGameMechanicId", [mechanicId, boardGameId])
 }
 
 enum Role {

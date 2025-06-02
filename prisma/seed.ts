@@ -4,6 +4,7 @@ import { BoardGameSeed } from "./seeds/BoardGameSeed";
 import { CategorySeed } from "./seeds/CategorySeed";
 import { MechanicSeed } from "./seeds/MechanicSeed";
 import { BoardGameCategorySeed } from "./seeds/BoardGameCategorySeed";
+import { BoardGameMechanicSeed } from './seeds/BoardGameMechanicSeed';
 
 const prisma = new PrismaClient();
 
@@ -17,6 +18,9 @@ async function main() {
 
 	const boardGameCategorySeed = new BoardGameCategorySeed();
 	const boardGameCategoryData = await boardGameCategorySeed.createSeedData();
+
+	const boardGameMechanicSeed = new BoardGameMechanicSeed();
+	const boardGameMechanicData = await boardGameMechanicSeed.createSeedData();
 
 	console.log(`Seeding: Users | ${usersData.length} Records`);
 	await Promise.all(
@@ -76,6 +80,24 @@ async function main() {
 				},
 				update: {},
 				create: boardGameCat,
+			})
+		)
+	);
+
+	console.log(
+		`Seeding: Board Game Mechanics | ${boardGameMechanicData.length} Records`
+	);
+	await Promise.all(
+		boardGameMechanicData.map((boardGameMechanic) =>
+			prisma.boardGameMechanic.upsert({
+				where: {
+					boardGameMechanicId: {
+						mechanicId: boardGameMechanic.mechanicId,
+						boardGameId: boardGameMechanic.boardGameId,
+					},
+				},
+				update: {},
+				create: boardGameMechanic,
 			})
 		)
 	);
