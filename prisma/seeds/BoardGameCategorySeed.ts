@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Seeder } from "./Seeder";
+import { BoardGameSeedData } from "@/types/board-game-seed";
 
 const prisma = new PrismaClient();
 
@@ -9,21 +10,9 @@ interface BoardGameCategoryData {
 }
 
 export class BoardGameCategorySeed extends Seeder {
-	// The data we're going to seed into the BoardGameCategory table
-	private toLink = [
-		{
-			gameSlug: "arcs",
-			categorySlugs: ["science-fiction", "space-exploration", "wargame"],
-		},
-		{
-			gameSlug: "bananagrams",
-			categorySlugs: ["real-time", "word-game"],
-		},
-		{
-			gameSlug: "blue-lagoon",
-			categorySlugs: ["abstract-strategy"],
-		},
-	];
+	constructor(private toLink: BoardGameSeedData[]) {
+		super();
+	}
 
 	async createSeedData() {
 		// Set an array which will hold the link objects

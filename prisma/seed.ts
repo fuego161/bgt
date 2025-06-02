@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import { boardGameData } from './seeds/BoardGameSeedData';
 import { UserSeed } from "./seeds/UserSeed";
 import { BoardGameSeed } from "./seeds/BoardGameSeed";
 import { CategorySeed } from "./seeds/CategorySeed";
 import { MechanicSeed } from "./seeds/MechanicSeed";
 import { BoardGameCategorySeed } from "./seeds/BoardGameCategorySeed";
-import { BoardGameMechanicSeed } from './seeds/BoardGameMechanicSeed';
+import { BoardGameMechanicSeed } from "./seeds/BoardGameMechanicSeed";
 
 const prisma = new PrismaClient();
 
@@ -16,10 +17,10 @@ async function main() {
 	const categorySeed = new CategorySeed().createSeedData();
 	const mechanicSeed = new MechanicSeed().createSeedData();
 
-	const boardGameCategorySeed = new BoardGameCategorySeed();
+	const boardGameCategorySeed = new BoardGameCategorySeed(boardGameData);
 	const boardGameCategoryData = await boardGameCategorySeed.createSeedData();
 
-	const boardGameMechanicSeed = new BoardGameMechanicSeed();
+	const boardGameMechanicSeed = new BoardGameMechanicSeed(boardGameData);
 	const boardGameMechanicData = await boardGameMechanicSeed.createSeedData();
 
 	console.log(`Seeding: Users | ${usersData.length} Records`);

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Seeder } from "./Seeder";
+import { BoardGameSeedData } from '@/types/board-game-seed';
 
 const prisma = new PrismaClient();
 
@@ -9,42 +10,9 @@ interface BoardGameMechanicData {
 }
 
 export class BoardGameMechanicSeed extends Seeder {
-	// The data we're going to seed into the BoardGameMechanic table
-	private toLink = [
-		{
-			gameSlug: "arcs",
-			mechanicSlugs: [
-				"area-majority-influence",
-				"area-movement",
-				"campaign-battle-card-driven",
-				"dice-rolling",
-				"die-icon-resolution",
-				"hand-management",
-				"take-that",
-				"trick-taking",
-				"turn-order-claim-action",
-				"variable-player-powers",
-			],
-		},
-		{
-			gameSlug: "bananagrams",
-			mechanicSlugs: ["race", "spelling", "tile-placement"],
-		},
-		{
-			gameSlug: "blue-lagoon",
-			mechanicSlugs: [
-				"area-majority-influence",
-				"chaining",
-				"connections",
-				"end-game-bonuses",
-				"hexagon-grid",
-				"network-and-route-building",
-				"score-and-reset-game",
-				"set-collection",
-				"variable-set-up",
-			],
-		},
-	];
+	constructor(private toLink: BoardGameSeedData[]) {
+		super();
+	}
 
 	async createSeedData() {
 		// Set an array which will hold the link objects
