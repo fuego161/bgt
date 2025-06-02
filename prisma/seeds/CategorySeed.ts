@@ -6,10 +6,6 @@ interface CategoryData {
 }
 
 export class CategorySeed extends Seeder {
-	constructor() {
-		super();
-	}
-
 	createSeedData(): CategoryData[] {
 		return [
 			{ ...this.generateTitleWithSlug("Abstract Strategy") },

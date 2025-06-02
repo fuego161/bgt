@@ -10,10 +10,6 @@ interface BoardGameData {
 }
 
 export class BoardGameSeed extends Seeder {
-	constructor() {
-		super();
-	}
-
 	createSeedData(): BoardGameData[] {
 		return [
 			{

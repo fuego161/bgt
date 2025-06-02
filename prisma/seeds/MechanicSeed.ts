@@ -6,10 +6,6 @@ interface MechanicData {
 }
 
 export class MechanicSeed extends Seeder {
-	constructor() {
-		super();
-	}
-
 	createSeedData(): MechanicData[] {
 		return [
 			{ ...this.generateTitleWithSlug("Action Drafting") },
