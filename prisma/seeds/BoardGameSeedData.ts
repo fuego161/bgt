@@ -1,9 +1,9 @@
 import { BoardGameSeedData } from "@/types/board-game";
+import { Seeder } from './Seeder';
 
 export const boardGameData: BoardGameSeedData[] = [
 	{
-		title: "Arcs",
-		slug: "arcs",
+		...Seeder.generateTitleWithSlug("Arcs"),
 		publisherName: "Leder Games",
 		designerName: "Cole Wehrle",
 		minPlayers: 2,
@@ -23,8 +23,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Bananagrams",
-		slug: "bananagrams",
+		...Seeder.generateTitleWithSlug("Bananagrams"),
 		publisherName: "Bananagrams, Inc.",
 		designerName: "Rena Nathanson",
 		minPlayers: 1,
@@ -33,8 +32,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		mechanicSlugs: ["race", "spelling", "tile-placement"],
 	},
 	{
-		title: "Blue Lagoon",
-		slug: "blue-lagoon",
+		...Seeder.generateTitleWithSlug("Blue Lagoon"),
 		publisherName: "Blue Orange Games",
 		designerName: "Reiner Knizia",
 		minPlayers: 2,
@@ -53,8 +51,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Boggle",
-		slug: "boggle",
+		...Seeder.generateTitleWithSlug("Boggle"),
 		publisherName: "Alga",
 		designerName: "Bill Cooke",
 		minPlayers: 1,
@@ -66,8 +63,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Boss Monster: The Dungeon Building Card Game",
-		slug: "boss-monster-the-dungeon-building-card-game",
+		...Seeder.generateTitleWithSlug("Boss Monster: The Dungeon Building Card Game"),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
@@ -81,8 +77,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Boss Monster 2: The Next Level",
-		slug: "boss-monster-2-the-next-level",
+		...Seeder.generateTitleWithSlug("Boss Monster 2: The Next Level"),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
@@ -102,8 +97,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Boss Monster: Paper & Pixels",
-		slug: "boss-monster-paper-and-pixels",
+		...Seeder.generateTitleWithSlug("Boss Monster: Paper & Pixels"),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
@@ -123,8 +117,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Boss Monster: Tools of Hero-Kind",
-		slug: "boss-monster-tools-of-hero-kind",
+		...Seeder.generateTitleWithSlug("Boss Monster: Tools of Hero-Kind"),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
@@ -144,8 +137,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Brass: Birmingham",
-		slug: "brass-birmingham",
+		...Seeder.generateTitleWithSlug("Brass: Birmingham"),
 		publisherName: "Roxley",
 		designerName: "Gavan Brown",
 		minPlayers: 2,
@@ -172,8 +164,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Cat in the Box: Deluxe Edition",
-		slug: "cat-in-the-box-deluxe-edition",
+		...Seeder.generateTitleWithSlug("Cat in the Box: Deluxe Edition"),
 		publisherName: "Hobby Japan",
 		designerName: "Muneyuki Yokouch",
 		minPlayers: 2,
@@ -182,8 +173,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		mechanicSlugs: ["hand-management", "predictive-bid", "trick-taking"],
 	},
 	{
-		title: "Clank! In! Space!: A Deck-Building Adventure",
-		slug: "clank-in-space-a-deck-building-adventure",
+		...Seeder.generateTitleWithSlug("Clank! In! Space!: A Deck-Building Adventure"),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 2,
@@ -200,8 +190,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		],
 	},
 	{
-		title: "Clank! Legacy: Acquisitions Incorporated",
-		slug: "clank-legacy-acquisitions-incorporated",
+		...Seeder.generateTitleWithSlug("Clank! Legacy: Acquisitions Incorporated"),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 2,

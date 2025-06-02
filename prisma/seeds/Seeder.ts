@@ -1,5 +1,5 @@
 export class Seeder {
-	private characterMap = {
+	static characterMap = {
 		$: "dollar",
 		"%": "percent",
 		"&": "and",
@@ -21,9 +21,14 @@ export class Seeder {
 		"…": "...",
 	};
 
-	constructor() {}
-
-	slugify(title: string, separator = "-"): string {
+	/**
+	 * Converts a string into a URL-safe slug
+	 *
+	 * @param title The title to slugify
+	 * @param separator The character used to replace spaces (default is "-")
+	 * @returns A lowercased, "slugified" string
+	 */
+	static slugify(title: string, separator = "-"): string {
 		return title
 			.trim()
 			.normalize("NFC")
@@ -42,10 +47,12 @@ export class Seeder {
 			.toLocaleLowerCase();
 	}
 
-	generateTitleWithSlug(
+	static generateTitleWithSlug(
 		title: string,
 		separator = "-"
 	): { title: string; slug: string } {
+		if (!title) throw new Error("Title is required to generate a slug");
+
 		return {
 			title: title,
 			slug: this.slugify(title, separator),

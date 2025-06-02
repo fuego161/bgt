@@ -35,13 +35,15 @@ export class UserSeed {
 	}
 
 	async createSeedData(): Promise<UserData[]> {
-		if (this.includeAdmin) this.createAdminUser();
+		if (this.includeAdmin) await this.createAdminUser();
+
+		const hashedPass = await bcrypt.hash("pass", 10);
 
 		for (let i = 0; i < this.count; i++) {
 			this.data.push({
 				username: faker.internet.username(),
 				email: faker.internet.email(),
-				password: await bcrypt.hash("pass", 10),
+				password: hashedPass,
 				role: Role.User,
 			});
 		}
