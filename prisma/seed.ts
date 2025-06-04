@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
-import { boardGameData } from './seeds/BoardGameSeedData';
+import { boardGameData } from "./seeds/BoardGameSeedData";
 import { UserSeed } from "./seeds/UserSeed";
 import { CategorySeed } from "./seeds/CategorySeed";
 import { MechanicSeed } from "./seeds/MechanicSeed";
 import { BoardGameCategorySeed } from "./seeds/BoardGameCategorySeed";
 import { BoardGameMechanicSeed } from "./seeds/BoardGameMechanicSeed";
-import { UserBoardGameSeed } from './seeds/UserBoardGameSeed';
+import { UserBoardGameSeed } from "./seeds/UserBoardGameSeed";
 
 const prisma = new PrismaClient();
 
@@ -121,7 +121,7 @@ async function main() {
 					userId_boardGameId: {
 						userId: userBoardGame.userId,
 						boardGameId: userBoardGame.boardGameId,
-					}
+					},
 				},
 				update: {},
 				create: userBoardGame,

@@ -31,9 +31,10 @@ export class UserBoardGameSeed {
 		// Create an array of available state keys
 		const stateKeys = Object.keys(State);
 		// Get a random state by getting a random number (minus 1 to account for the 0 index)
-		const randomState = stateKeys[this.getRandomCount(stateKeys.length - 1)];
+		const randomState =
+			stateKeys[this.getRandomCount(stateKeys.length - 1)];
 
-		return randomState ?? 'Owned';
+		return randomState ?? "Owned";
 	}
 
 	private createCollection(games: BoardGame[]): number[] {

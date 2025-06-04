@@ -1,5 +1,5 @@
 import { BoardGameSeedData } from "@/types/board-game";
-import { Seeder } from './Seeder';
+import { Seeder } from "./Seeder";
 
 export const boardGameData: BoardGameSeedData[] = [
 	{

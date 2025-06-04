@@ -1,4 +1,4 @@
-import { Seeder } from './Seeder';
+import { Seeder } from "./Seeder";
 
 interface CategoryData {
 	title: string;
@@ -14,16 +14,26 @@ export class CategorySeed extends Seeder {
 			{ ...CategorySeed.generateTitleWithSlug("Card Game") },
 			{ ...CategorySeed.generateTitleWithSlug("City Building") },
 			{ ...CategorySeed.generateTitleWithSlug("Civilization") },
+			{ ...CategorySeed.generateTitleWithSlug("Civilization") },
+			{ ...CategorySeed.generateTitleWithSlug("Comic Book / Strip") },
 			{ ...CategorySeed.generateTitleWithSlug("Deduction") },
 			{ ...CategorySeed.generateTitleWithSlug("Economic") },
 			{ ...CategorySeed.generateTitleWithSlug("Environmental") },
-			{ ...CategorySeed.generateTitleWithSlug("Expansion for Base-game") },
+			{
+				...CategorySeed.generateTitleWithSlug(
+					"Expansion for Base-game"
+				),
+			},
 			{ ...CategorySeed.generateTitleWithSlug("Exploration") },
 			{ ...CategorySeed.generateTitleWithSlug("Fantasy") },
 			{ ...CategorySeed.generateTitleWithSlug("Farming") },
 			{ ...CategorySeed.generateTitleWithSlug("Fighting") },
 			{ ...CategorySeed.generateTitleWithSlug("Horror") },
-			{ ...CategorySeed.generateTitleWithSlug("Industry / Manufacturing") },
+			{
+				...CategorySeed.generateTitleWithSlug(
+					"Industry / Manufacturing"
+				),
+			},
 			{ ...CategorySeed.generateTitleWithSlug("Medical") },
 			{ ...CategorySeed.generateTitleWithSlug("Movies / TV / Radio") },
 			{ ...CategorySeed.generateTitleWithSlug("Murder / Mystery") },

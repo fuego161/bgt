@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Seeder } from "./Seeder";
-import { BoardGameSeedData } from '@/types/board-game';
+import { BoardGameSeedData } from "@/types/board-game";
 
 const prisma = new PrismaClient();
 
