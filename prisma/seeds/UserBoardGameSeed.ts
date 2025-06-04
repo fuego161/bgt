@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { PrismaClient } from "@prisma/client";
 import type { BoardGame } from "@prisma/client";
-import { BoardGameSeedData } from "@/types/board-game";
+import type { BoardGameSeedData } from "@/types/seed/board-game";
 
 const prisma = new PrismaClient();
 
