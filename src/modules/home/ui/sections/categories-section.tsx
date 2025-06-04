@@ -3,15 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import prisma from "@/lib/prisma";
 import { Carousel } from "@/components/ui/carousel";
-
-export interface CarouselItemDataProps {
-	title: string;
-	slug: string;
-	link: {
-		pathname: string;
-		query?: Record<string, string>;
-	};
-}
+import type { CarouselItemDataProps } from "@/types/ui/carousel";
 
 export const CategoriesSection = () => {
 	return (

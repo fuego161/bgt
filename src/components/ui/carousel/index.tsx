@@ -1,5 +1,5 @@
 import { CarouselItem } from "@/components/ui/carousel/item";
-import { CarouselItemDataProps } from "@/modules/home/ui/sections/categories-section";
+import type { CarouselItemDataProps } from "@/types/ui/carousel";
 
 type CarouselProps =
 	| { isLoading: true; ariaLabel?: string; data?: undefined }

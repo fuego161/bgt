@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CarouselItemDataProps } from "@/modules/home/ui/sections/categories-section";
+import type { CarouselItemDataProps } from "@/types/ui/carousel";
 
 interface CarouselItemProps {
 	isLoading?: boolean;
