@@ -1,65 +1,62 @@
 import prisma from "@/lib/prisma";
-import type { BoardGame, BoardGameCategory } from "@prisma/client";
 
 interface BoardGameTableProps {
 	category?: string;
 }
 
-type boardGamesProps = (BoardGameCategory[] & BoardGame[]) | BoardGame[];
-
 export const BoardGameTable = async ({ category }: BoardGameTableProps) => {
-	let boardGames: boardGamesProps;
-	let categoryId: { id: number } | null = null;
-
-	if (category) {
-		categoryId = await prisma.category.findUnique({
-			select: {
-				id: true,
-			},
-			where: {
-				slug: category,
-			},
-		});
-	}
-
-	if (categoryId) {
-		boardGames = await prisma.boardGame.findMany({
-			where: {
-				boardGameCategories: {
-					some: {
-						categoryId: categoryId.id,
-					},
+	const selectedCategory = category
+		? await prisma.category.findUnique({
+				select: {
+					id: true,
+					title: true,
 				},
-			},
-			include: {
-				boardGameCategories: true,
-			},
-		});
-	} else {
-		boardGames = await prisma.boardGame.findMany();
-	}
+				where: {
+					slug: category,
+				},
+		  })
+		: null;
+
+	const boardGames = await prisma.boardGame.findMany({
+		where: selectedCategory
+			? {
+					boardGameCategories: {
+						some: {
+							categoryId: selectedCategory.id,
+						},
+					},
+			  }
+			: undefined,
+	});
+
+	if (!boardGames.length) return <p>No Results!</p>;
 
 	return (
 		<table>
+			<caption className="sr-only">
+				List of board games{" "}
+				{selectedCategory &&
+					`categorised under ${selectedCategory.title}`}
+			</caption>
 			<thead>
 				<tr>
-					<th>Title</th>
-					<th>Player Count</th>
-					<th>Designer</th>
-					<th>Publisher</th>
+					<th scope="col">Title</th>
+					<th scope="col">Player Count</th>
+					<th scope="col">Designer</th>
+					<th scope="col">Publisher</th>
 				</tr>
 			</thead>
 			<tbody>
 				{boardGames.map((game) => (
 					<tr key={game.id}>
-						<td>{game.title}</td>
-						<td>
+						<td scope="row">{game.title}</td>
+						<td scope="row">
 							{game.minPlayers === game.maxPlayers
 								? game.maxPlayers
 								: `${game.minPlayers} - ${game.maxPlayers}`}
 						</td>
-						<td>{game.designerName}</td>
-						<td>{game.publisherName}</td>
+						<td scope="row">{game.designerName}</td>
+						<td scope="row">{game.publisherName}</td>
 					</tr>
 				))}
 			</tbody>
