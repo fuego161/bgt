@@ -1,6 +1,45 @@
 import prisma from "@/lib/prisma";
-const Page = async () => {
-	const boardGames = await prisma.boardGame.findMany();
+import type { BoardGame, BoardGameCategory } from "@prisma/client";
+
+interface PageProps {
+	searchParams: Promise<{ category?: string }>;
+}
+
+type boardGamesProps = (BoardGameCategory[] & BoardGame[]) | BoardGame[];
+
+const Page = async ({ searchParams }: PageProps) => {
+	const { category } = await searchParams;
+
+	let boardGames: boardGamesProps;
+	let categoryId: { id: number } | null = null;
+
+	if (category) {
+		categoryId = await prisma.category.findUnique({
+			select: {
+				id: true,
+			},
+			where: {
+				slug: category,
+			},
+		});
+	}
+
+	if (categoryId) {
+		boardGames = await prisma.boardGame.findMany({
+			where: {
+				boardGameCategories: {
+					some: {
+						categoryId: categoryId.id,
+					},
+				},
+			},
+			include: {
+				boardGameCategories: true,
+			},
+		});
+	} else {
+		boardGames = await prisma.boardGame.findMany();
+	}
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
