@@ -7,11 +7,11 @@ import type { CarouselItemDataProps } from "@/types/ui/carousel";
 
 export const CategoriesSection = () => {
 	return (
-		<Suspense fallback={<CategoriesSkeleton />}>
-			<ErrorBoundary fallback={<p>Error...</p>}>
+		<ErrorBoundary fallback={<p>Error...</p>}>
+			<Suspense fallback={<CategoriesSkeleton />}>
 				<CategoriesSectionOutput />
-			</ErrorBoundary>
-		</Suspense>
+			</Suspense>
+		</ErrorBoundary>
 	);
 };
 
