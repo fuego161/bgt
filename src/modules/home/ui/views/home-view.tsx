@@ -1,9 +1,9 @@
-import { CategoriesSection } from "@/modules/home/ui/sections/categories-section";
+import { CategoriesCarousel } from "@/components/ui/categories-carousel";
 
 export const HomeView = () => {
 	return (
 		<div>
-			<CategoriesSection />
+			<CategoriesCarousel />
 		</div>
 	);
 };

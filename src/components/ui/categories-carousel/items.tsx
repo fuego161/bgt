@@ -1,21 +1,7 @@
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-
 import prisma from "@/lib/prisma";
 import { Carousel } from "@/components/ui/carousel";
+
 import type { CarouselItemDataProps } from "@/types/ui/carousel";
-
-export const CategoriesSection = () => {
-	return (
-		<ErrorBoundary fallback={<p>Error...</p>}>
-			<Suspense fallback={<CategoriesSkeleton />}>
-				<CategoriesSectionOutput />
-			</Suspense>
-		</ErrorBoundary>
-	);
-};
-
-const CategoriesSkeleton = () => <Carousel isLoading ariaLabel="Categories" />;
 
 const toCarouselData = (title: string, slug: string) => ({
 	title,
@@ -26,7 +12,7 @@ const toCarouselData = (title: string, slug: string) => ({
 	},
 });
 
-const CategoriesSectionOutput = async () => {
+export const CategoriesCarouselItems = async () => {
 	const categories = await prisma.category.findMany({
 		orderBy: [
 			{

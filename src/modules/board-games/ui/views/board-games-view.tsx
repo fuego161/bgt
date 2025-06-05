@@ -1,5 +1,5 @@
+import { CategoriesCarousel } from "@/components/ui/categories-carousel";
 import { BoardGameTable } from "@/modules/board-games/ui/sections/board-game-table";
-import { CategoriesSection } from "@/modules/board-games/ui/sections/categories-section";
 
 interface BoardGamesViewProps {
 	category?: string;
@@ -8,7 +8,7 @@ interface BoardGamesViewProps {
 export const BoardGamesView = ({ category }: BoardGamesViewProps) => {
 	return (
 		<>
-			<CategoriesSection />
+			<CategoriesCarousel />
 			<BoardGameTable category={category} />
 		</>
 	);
