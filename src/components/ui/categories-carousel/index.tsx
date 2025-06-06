@@ -21,5 +21,5 @@ export const CategoriesCarousel = ({ type }: CategoriesCarouselProps) => {
 };
 
 const CategoriesCarouselSkeleton = () => (
-	<Carousel isLoading ariaLabel="Categories" />
+	<Carousel type="loader" ariaLabel="Categories" />
 );
