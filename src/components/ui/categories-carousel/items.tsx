@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { Carousel } from "@/components/ui/carousel";
-
 import { CategoriesCarouselInteractiveItems } from "@/components/ui/categories-carousel/interactive-items";
 
 import type { Category } from "@prisma/client";
