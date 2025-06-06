@@ -1,5 +1,5 @@
-import bcrypt from "bcrypt";
 import { faker } from "@faker-js/faker";
+import bcrypt from "bcrypt";
 
 enum Role {
 	Admin = "ADMIN",

@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 
 import { Carousel } from "@/components/ui/carousel";
 
-import type { Category } from "@prisma/client";
 import type { CarouselItemHandlerProps } from "@/types/ui/carousel";
+import type { Category } from "@prisma/client";
 
 interface CategoriesCarouselInteractiveItemsProps {
 	categories: Category[];

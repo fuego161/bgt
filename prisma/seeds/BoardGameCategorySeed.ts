@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+
 import { Seeder } from "./Seeder";
+
 import type { BoardGameSeedData } from "@/types/seed/board-game";
 
 const prisma = new PrismaClient();

@@ -1,13 +1,12 @@
 "use client";
 
-import type { ReactElement } from "react";
-
 import { CarouselItem } from "@/components/ui/carousel/item";
 
 import type {
 	CarouselItemHandlerProps,
 	CarouselItemLinkProps,
 } from "@/types/ui/carousel";
+import type { ReactElement } from "react";
 
 type CarouselProps =
 	| {

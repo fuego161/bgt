@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import { boardGameData } from "./seeds/BoardGameSeedData";
-import { UserSeed } from "./seeds/UserSeed";
-import { CategorySeed } from "./seeds/CategorySeed";
-import { MechanicSeed } from "./seeds/MechanicSeed";
+
 import { BoardGameCategorySeed } from "./seeds/BoardGameCategorySeed";
 import { BoardGameMechanicSeed } from "./seeds/BoardGameMechanicSeed";
+import { boardGameData } from "./seeds/BoardGameSeedData";
+import { CategorySeed } from "./seeds/CategorySeed";
+import { MechanicSeed } from "./seeds/MechanicSeed";
 import { UserBoardGameSeed } from "./seeds/UserBoardGameSeed";
+import { UserSeed } from "./seeds/UserSeed";
 
 const prisma = new PrismaClient();
 
