@@ -1,44 +1,78 @@
 import Link from "next/link";
+import type { ReactElement } from "react";
+
 import type { CarouselItemDataProps } from "@/types/ui/carousel";
 
-interface CarouselItemProps {
-	isLoading?: boolean;
-	data?: CarouselItemDataProps;
-}
+type CarouselItemProps =
+	| { type: "loader" }
+	| { type: "link"; data: CarouselItemDataProps }
+	| {
+			type: "handler";
+			title: string;
+			// TODO: Remove optional
+			onSelect?: (value: string | null) => void;
+	  };
 
 const btnClasses =
 	"block px-4 py-2 bg-teal-300 rounded-sm text-center whitespace-nowrap";
 
-export const CarouselItem = ({ isLoading, data }: CarouselItemProps) => {
-	return (
-		<li className="mr-3 last-of-type:mr-0">
-			{isLoading && (
-				<button
-					className={`...${btnClasses} w-[100px] animate-pulse`}
-					disabled
-					aria-hidden="true"
-					tabIndex={-1}
-				>
-					&nbsp;
-				</button>
-			)}
+const itemWrapper = (item: ReactElement): ReactElement => {
+	return <li className="mr-3 last-of-type:mr-0">{item}</li>;
+};
 
-			{!isLoading && data && data.link && (
+export const CarouselItem = (props: CarouselItemProps) => {
+	if (props.type === "loader") {
+		return itemWrapper(
+			<button
+				className={`${btnClasses} w-[100px] animate-pulse`}
+				disabled
+				aria-disabled="true"
+				aria-hidden="true"
+				tabIndex={-1}
+			>
+				&nbsp;
+			</button>
+		);
+	}
+
+	if (props.type === "link") {
+		const { data } = props;
+		const { title, link, disabled } = data;
+
+		if (disabled) {
+			return itemWrapper(
+				<span className={`${btnClasses} block cursor-not-allowed`}>
+					{title}
+				</span>
+			);
+		}
+
+		if (link) {
+			const { pathname, query } = link;
+
+			return itemWrapper(
 				<Link
 					className={btnClasses}
 					href={{
-						pathname: data.link.pathname,
-						query: data.link.query,
+						pathname,
+						query,
 					}}
 				>
-					{data.title}
+					{title}
 				</Link>
-			)}
+			);
+		}
+	}
 
-			{!isLoading && data && !data.link && (
-				// TODO: This'll be a same page item, so will hold an onSelect handler
-				<button className={btnClasses}>{data.title}</button>
-			)}
-		</li>
-	);
+	if (props.type === "handler") {
+		const { title } = props;
+
+		return itemWrapper(<button className={btnClasses}>{title}</button>);
+	}
+
+	if (process.env.NODE_ENV === "development") {
+		console.warn("Unhandled CarouselItemProps variant:", props);
+	}
+
+	return null;
 };

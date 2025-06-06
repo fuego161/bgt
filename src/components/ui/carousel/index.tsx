@@ -11,13 +11,13 @@ export const Carousel = ({ isLoading, ariaLabel, data }: CarouselProps) => {
 			<ul className="carousel flex overflow-x-hidden">
 				{isLoading &&
 					Array.from({ length: 20 }).map((_, index) => (
-						<CarouselItem key={index} isLoading />
+						<CarouselItem key={index} type="loader" />
 					))}
 
 				{!isLoading &&
 					data &&
 					data.map((item) => (
-						<CarouselItem key={item.slug} data={item} />
+						<CarouselItem key={item.slug} type="link" data={item} />
 					))}
 			</ul>
 		</nav>
