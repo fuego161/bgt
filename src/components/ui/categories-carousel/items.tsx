@@ -22,6 +22,15 @@ export const CategoriesCarouselItems = async () => {
 		],
 	});
 
+	if (!categories.length) {
+		return (
+			<Carousel
+				ariaLabel="Categories"
+				data={[toCarouselData("No Categories Found", "", true)]}
+			/>
+		);
+	}
+
 	const categoryData: CarouselItemDataProps[] = categories.map(
 		({ title, slug }) => toCarouselData(title, slug)
 	);
