@@ -1,8 +1,11 @@
 import prisma from "@/lib/prisma";
 import { Carousel } from "@/components/ui/carousel";
 
+import { CategoriesCarouselInteractiveItems } from "@/components/ui/categories-carousel/interactive-items";
+
+import type { Category } from "@prisma/client";
 import type {
-	CarouselItemDataProps,
+	CarouselItemLinkProps,
 	CarouselItemTypes,
 } from "@/types/ui/carousel";
 
@@ -14,7 +17,7 @@ const toCarouselData = (
 	title: string,
 	slug: string,
 	disabled = false
-): CarouselItemDataProps => ({
+): CarouselItemLinkProps => ({
 	title,
 	slug,
 	disabled,
@@ -27,7 +30,7 @@ const toCarouselData = (
 export const CategoriesCarouselItems = async ({
 	type,
 }: CategoriesCarouselItemsProps) => {
-	const categories = await prisma.category.findMany({
+	const categories: Category[] = await prisma.category.findMany({
 		orderBy: [
 			{
 				title: "asc",
@@ -45,24 +48,21 @@ export const CategoriesCarouselItems = async ({
 		);
 	}
 
-	const categoryData: CarouselItemDataProps[] = [];
+	const categoryLinks: CarouselItemLinkProps[] = [];
 
 	if (type === "link") {
-		categoryData.push(
+		categoryLinks.push(
 			...categories.map(({ title, slug }) => toCarouselData(title, slug))
 		);
 
-		categoryData.unshift(toCarouselData("All", ""));
+		categoryLinks.unshift(toCarouselData("All", ""));
+
+		return (
+			<Carousel ariaLabel="Categories" data={categoryLinks} type={type} />
+		);
 	}
 
-	// TODO: Add Handler
 	if (type === "handler") {
-		categoryData.push(
-			...categories.map(({ title, slug }) => toCarouselData(title, slug))
-		);
-
-		categoryData.unshift(toCarouselData("All", ""));
+		return <CategoriesCarouselInteractiveItems categories={categories} />;
 	}
-
-	return <Carousel ariaLabel="Categories" data={categoryData} type={type} />;
 };

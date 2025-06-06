@@ -1,16 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactElement } from "react";
 
-import type { CarouselItemDataProps } from "@/types/ui/carousel";
+import type {
+	CarouselItemHandlerProps,
+	CarouselItemLinkProps,
+} from "@/types/ui/carousel";
 
 type CarouselItemProps =
 	| { type: "loader" }
-	| { type: "link"; data: CarouselItemDataProps }
+	| { type: "link"; data: CarouselItemLinkProps }
 	| {
 			type: "handler";
-			title: string;
-			// TODO: Remove optional
-			onSelect?: (value: string | null) => void;
+			data: CarouselItemHandlerProps;
 	  };
 
 const btnClasses =
@@ -65,9 +68,14 @@ export const CarouselItem = (props: CarouselItemProps) => {
 	}
 
 	if (props.type === "handler") {
-		const { title } = props;
+		const { data } = props;
+		const { title, onSelect } = data;
 
-		return itemWrapper(<button className={btnClasses}>{title}</button>);
+		return itemWrapper(
+			<button className={btnClasses} onClick={() => onSelect?.("test")}>
+				{title}
+			</button>
+		);
 	}
 
 	if (process.env.NODE_ENV === "development") {

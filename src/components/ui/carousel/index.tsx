@@ -1,65 +1,73 @@
+"use client";
+
+import type { ReactElement } from "react";
+
 import { CarouselItem } from "@/components/ui/carousel/item";
 import type {
-	CarouselItemDataProps,
-	CarouselItemTypes,
+	CarouselItemHandlerProps,
+	CarouselItemLinkProps,
 } from "@/types/ui/carousel";
 
 type CarouselProps =
 	| {
-			isLoading: true;
+			type: "loader";
 			ariaLabel?: string;
 			data?: undefined;
-			type?: undefined;
 	  }
 	| {
-			isLoading?: false;
+			type: "link";
 			ariaLabel?: string;
-			data: CarouselItemDataProps[];
-			type: CarouselItemTypes;
+			data: CarouselItemLinkProps[];
+	  }
+	| {
+			type: "handler";
+			ariaLabel?: string;
+			data: CarouselItemHandlerProps[];
 	  };
 
-export const Carousel = ({
-	isLoading,
-	ariaLabel,
-	data,
-	type,
-}: CarouselProps) => {
+const navWrapper = (
+	items: ReactElement[],
+	ariaLabel?: string
+): ReactElement => {
 	return (
 		<nav {...(ariaLabel && { "aria-label": ariaLabel })}>
-			<ul className="carousel flex overflow-x-hidden">
-				{isLoading &&
-					Array.from({ length: 20 }).map((_, index) => (
-						<CarouselItem key={index} type="loader" />
-					))}
-
-				{!isLoading &&
-					data &&
-					data.map((item) => {
-						switch (type) {
-							case "link":
-								return (
-									<CarouselItem
-										key={item.slug}
-										type="link"
-										data={item}
-									/>
-								);
-
-							case "handler":
-								return (
-									<CarouselItem
-										key={item.slug}
-										type="handler"
-										title={item.title}
-										onSelect={() => {}}
-									/>
-								);
-
-							default:
-								return null;
-						}
-					})}
-			</ul>
+			<ul className="carousel flex overflow-x-hidden">{items}</ul>
 		</nav>
 	);
+};
+
+export const Carousel = (props: CarouselProps) => {
+	const { ariaLabel, type } = props;
+
+	if (type === "loader") {
+		return navWrapper(
+			Array.from({ length: 20 }).map((_, index) => (
+				<CarouselItem key={index} type="loader" />
+			)),
+			ariaLabel
+		);
+	}
+
+	if (type === "link") {
+		const { data } = props;
+
+		return navWrapper(
+			data.map((item) => (
+				<CarouselItem key={item.slug} type="link" data={item} />
+			)),
+			ariaLabel
+		);
+	}
+
+	if (type === "handler") {
+		const { data } = props;
+
+		return navWrapper(
+			// TODO: Remove index key
+			data.map((item, index) => (
+				<CarouselItem key={index} type="handler" data={item} />
+			)),
+			ariaLabel
+		);
+	}
 };
