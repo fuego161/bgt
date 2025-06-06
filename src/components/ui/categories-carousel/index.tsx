@@ -4,11 +4,17 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Carousel } from "@/components/ui/carousel";
 import { CategoriesCarouselItems } from "@/components/ui/categories-carousel/items";
 
-export const CategoriesCarousel = () => {
+import type { CarouselItemTypes } from "@/types/ui/carousel";
+
+interface CategoriesCarouselProps {
+	type: CarouselItemTypes;
+}
+
+export const CategoriesCarousel = ({ type }: CategoriesCarouselProps) => {
 	return (
 		<ErrorBoundary fallback={<p>Error...</p>}>
 			<Suspense fallback={<CategoriesCarouselSkeleton />}>
-				<CategoriesCarouselItems />
+				<CategoriesCarouselItems type={type} />
 			</Suspense>
 		</ErrorBoundary>
 	);

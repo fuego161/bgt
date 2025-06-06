@@ -1,11 +1,29 @@
 import { CarouselItem } from "@/components/ui/carousel/item";
-import type { CarouselItemDataProps } from "@/types/ui/carousel";
+import type {
+	CarouselItemDataProps,
+	CarouselItemTypes,
+} from "@/types/ui/carousel";
 
 type CarouselProps =
-	| { isLoading: true; ariaLabel?: string; data?: undefined }
-	| { isLoading?: false; ariaLabel?: string; data: CarouselItemDataProps[] };
+	| {
+			isLoading: true;
+			ariaLabel?: string;
+			data?: undefined;
+			type?: undefined;
+	  }
+	| {
+			isLoading?: false;
+			ariaLabel?: string;
+			data: CarouselItemDataProps[];
+			type: CarouselItemTypes;
+	  };
 
-export const Carousel = ({ isLoading, ariaLabel, data }: CarouselProps) => {
+export const Carousel = ({
+	isLoading,
+	ariaLabel,
+	data,
+	type,
+}: CarouselProps) => {
 	return (
 		<nav {...(ariaLabel && { "aria-label": ariaLabel })}>
 			<ul className="carousel flex overflow-x-hidden">
@@ -16,9 +34,31 @@ export const Carousel = ({ isLoading, ariaLabel, data }: CarouselProps) => {
 
 				{!isLoading &&
 					data &&
-					data.map((item) => (
-						<CarouselItem key={item.slug} type="link" data={item} />
-					))}
+					data.map((item) => {
+						switch (type) {
+							case "link":
+								return (
+									<CarouselItem
+										key={item.slug}
+										type="link"
+										data={item}
+									/>
+								);
+
+							case "handler":
+								return (
+									<CarouselItem
+										key={item.slug}
+										type="handler"
+										title={item.title}
+										onSelect={() => {}}
+									/>
+								);
+
+							default:
+								return null;
+						}
+					})}
 			</ul>
 		</nav>
 	);

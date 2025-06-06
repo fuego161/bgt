@@ -7,3 +7,5 @@ export interface CarouselItemDataProps {
 		query?: Record<string, string>;
 	};
 }
+
+export type CarouselItemTypes = "loader" | "link" | "handler";
