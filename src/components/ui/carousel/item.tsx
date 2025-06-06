@@ -28,7 +28,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 		return itemWrapper(
 			<button
 				className={buttonVariants({
-					intent: "loading",
+					intent: "skeleton",
 					hoverable: false,
 				})}
 				disabled
@@ -80,12 +80,14 @@ export const CarouselItem = (props: CarouselItemProps) => {
 		const { data, category } = props;
 		const { title, slug, onSelect } = data;
 
+		const active = category === slug || (title === "All" && !category);
+
 		return itemWrapper(
 			<button
-				className={buttonVariants({ intent: "handler" })}
+				className={buttonVariants({ intent: "handler", active })}
 				onClick={() => onSelect?.(slug)}
 			>
-				{title} {category === slug && "TO BE ACTIVE"}
+				{title}
 			</button>
 		);
 	}

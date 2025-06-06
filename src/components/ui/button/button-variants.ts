@@ -1,13 +1,17 @@
 import { cva } from "class-variance-authority";
 
 export const buttonVariants = cva(
-	"block px-4 py-1 bg-zinc-600 border-zinc-600 border-2 rounded-sm text-white text-center whitespace-nowrap",
+	"block px-4 py-1 border-zinc-600 border-2 rounded-sm text-center whitespace-nowrap",
 	{
 		variants: {
 			intent: {
 				primary: null,
-				loading: "w-[100px] animate-pulse",
+				skeleton: "w-[100px] animate-pulse",
 				handler: "cursor-pointer",
+			},
+			active: {
+				true: "bg-white text-zinc-800 hover:text-white",
+				false: "bg-zinc-600 text-white",
 			},
 			disabled: {
 				false: null,
@@ -22,6 +26,7 @@ export const buttonVariants = cva(
 			disabled: false,
 			intent: "primary",
 			hoverable: true,
+			active: false,
 		},
 	}
 );
