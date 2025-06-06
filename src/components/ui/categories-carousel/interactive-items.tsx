@@ -9,10 +9,12 @@ import type { CarouselItemHandlerProps } from "@/types/ui/carousel";
 
 interface CategoriesCarouselInteractiveItemsProps {
 	categories: Category[];
+	category?: string;
 }
 
 export const CategoriesCarouselInteractiveItems = ({
 	categories,
+	category,
 }: CategoriesCarouselInteractiveItemsProps) => {
 	const router = useRouter();
 
@@ -56,6 +58,7 @@ export const CategoriesCarouselInteractiveItems = ({
 			ariaLabel="Categories"
 			data={categoryHandlers}
 			type="handler"
+			category={category}
 		/>
 	);
 };

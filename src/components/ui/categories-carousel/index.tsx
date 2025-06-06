@@ -8,13 +8,17 @@ import type { CarouselItemTypes } from "@/types/ui/carousel";
 
 interface CategoriesCarouselProps {
 	type: CarouselItemTypes;
+	category?: string;
 }
 
-export const CategoriesCarousel = ({ type }: CategoriesCarouselProps) => {
+export const CategoriesCarousel = ({
+	type,
+	category,
+}: CategoriesCarouselProps) => {
 	return (
 		<ErrorBoundary fallback={<p>Error...</p>}>
 			<Suspense fallback={<CategoriesCarouselSkeleton />}>
-				<CategoriesCarouselItems type={type} />
+				<CategoriesCarouselItems type={type} category={category} />
 			</Suspense>
 		</ErrorBoundary>
 	);

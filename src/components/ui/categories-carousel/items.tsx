@@ -10,6 +10,7 @@ import type {
 
 interface CategoriesCarouselItemsProps {
 	type: CarouselItemTypes;
+	category?: string;
 }
 
 const toCarouselData = (
@@ -28,6 +29,7 @@ const toCarouselData = (
 
 export const CategoriesCarouselItems = async ({
 	type,
+	category,
 }: CategoriesCarouselItemsProps) => {
 	const categories: Category[] = await prisma.category.findMany({
 		orderBy: [
@@ -62,6 +64,11 @@ export const CategoriesCarouselItems = async ({
 	}
 
 	if (type === "handler") {
-		return <CategoriesCarouselInteractiveItems categories={categories} />;
+		return (
+			<CategoriesCarouselInteractiveItems
+				categories={categories}
+				category={category}
+			/>
+		);
 	}
 };

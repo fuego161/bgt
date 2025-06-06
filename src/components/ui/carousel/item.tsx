@@ -69,7 +69,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 	}
 
 	if (props.type === "handler") {
-		const { data } = props;
+		const { data, category } = props;
 		const { title, slug, onSelect } = data;
 
 		return itemWrapper(
@@ -77,7 +77,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 				className={`${btnClasses} cursor-pointer`}
 				onClick={() => onSelect?.(slug)}
 			>
-				{title}
+				{title} {category === slug && "TO BE ACTIVE"}
 			</button>
 		);
 	}

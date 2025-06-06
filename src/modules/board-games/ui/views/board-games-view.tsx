@@ -8,7 +8,7 @@ interface BoardGamesViewProps {
 export const BoardGamesView = ({ category }: BoardGamesViewProps) => {
 	return (
 		<>
-			<CategoriesCarousel type="handler" />
+			<CategoriesCarousel type="handler" category={category} />
 			<BoardGameTable category={category} />
 		</>
 	);
