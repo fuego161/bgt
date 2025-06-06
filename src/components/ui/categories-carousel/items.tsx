@@ -3,7 +3,11 @@ import { Carousel } from "@/components/ui/carousel";
 
 import type { CarouselItemDataProps } from "@/types/ui/carousel";
 
-const toCarouselData = (title: string, slug: string, disabled = false) => ({
+const toCarouselData = (
+	title: string,
+	slug: string,
+	disabled = false
+): CarouselItemDataProps => ({
 	title,
 	slug,
 	disabled,
