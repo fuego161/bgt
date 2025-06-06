@@ -5,4 +5,5 @@ export interface CarouselItemDataProps {
 		pathname: string;
 		query?: Record<string, string>;
 	};
+	disabled?: boolean;
 }

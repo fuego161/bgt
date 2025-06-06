@@ -3,9 +3,10 @@ import { Carousel } from "@/components/ui/carousel";
 
 import type { CarouselItemDataProps } from "@/types/ui/carousel";
 
-const toCarouselData = (title: string, slug: string) => ({
+const toCarouselData = (title: string, slug: string, disabled = false) => ({
 	title,
 	slug,
+	disabled,
 	link: {
 		pathname: "board-games",
 		query: slug ? { category: slug } : undefined,
