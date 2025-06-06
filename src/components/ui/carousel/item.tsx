@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 
-import type { ReactElement } from "react";
+import { buttonVariants } from "@/components/ui/button/button-variants";
 
 import type {
 	CarouselItemHandlerProps,
 	CarouselItemLinkProps,
 } from "@/types/ui/carousel";
+import type { ReactElement } from "react";
 
 type CarouselItemProps =
 	| { type: "loader" }
@@ -15,10 +16,8 @@ type CarouselItemProps =
 	| {
 			type: "handler";
 			data: CarouselItemHandlerProps;
+			category?: string;
 	  };
-
-const btnClasses =
-	"block px-4 py-2 bg-teal-300 rounded-sm text-center whitespace-nowrap";
 
 const itemWrapper = (item: ReactElement): ReactElement => {
 	return <li className="mr-3 last-of-type:mr-0">{item}</li>;
@@ -28,7 +27,10 @@ export const CarouselItem = (props: CarouselItemProps) => {
 	if (props.type === "loader") {
 		return itemWrapper(
 			<button
-				className={`${btnClasses} w-[100px] animate-pulse`}
+				className={buttonVariants({
+					intent: "loading",
+					hoverable: false,
+				})}
 				disabled
 				aria-disabled="true"
 				aria-hidden="true"
@@ -45,7 +47,13 @@ export const CarouselItem = (props: CarouselItemProps) => {
 
 		if (disabled) {
 			return itemWrapper(
-				<span className={`${btnClasses} block cursor-not-allowed`}>
+				<span
+					className={buttonVariants({
+						intent: "primary",
+						disabled: true,
+						hoverable: false,
+					})}
+				>
 					{title}
 				</span>
 			);
@@ -56,7 +64,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 
 			return itemWrapper(
 				<Link
-					className={btnClasses}
+					className={buttonVariants({ intent: "primary" })}
 					href={{
 						pathname,
 						query,
@@ -74,7 +82,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 
 		return itemWrapper(
 			<button
-				className={`${btnClasses} cursor-pointer`}
+				className={buttonVariants({ intent: "handler" })}
 				onClick={() => onSelect?.(slug)}
 			>
 				{title} {category === slug && "TO BE ACTIVE"}
