@@ -10,6 +10,7 @@ export interface CarouselItemLinkProps {
 
 export interface CarouselItemHandlerProps {
 	title: string;
+	slug: string;
 	disabled?: boolean;
 	onSelect: (value: string | null) => void;
 }
