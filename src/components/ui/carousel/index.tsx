@@ -1,78 +1,23 @@
 "use client";
 
-import { CarouselItem } from "@/components/ui/carousel/item";
+import { CarouselItems } from "@/components/ui/carousel/items";
 
-import type {
-	CarouselItemHandlerProps,
-	CarouselItemLinkProps,
-} from "@/types/ui/carousel";
-import type { ReactElement } from "react";
+import type { CarouselPropsVariant } from "@/types/ui/carousel";
 
-type CarouselProps =
-	| {
-			type: "loader";
-			ariaLabel?: string;
-			data?: undefined;
-	  }
-	| {
-			type: "link";
-			ariaLabel?: string;
-			data: CarouselItemLinkProps[];
-	  }
-	| {
-			type: "handler";
-			ariaLabel?: string;
-			data: CarouselItemHandlerProps[];
-			initialItem?: string;
-	  };
+interface CarouselPropsBase {
+	ariaLabel: string;
+}
 
-const navWrapper = (
-	items: ReactElement[],
-	ariaLabel?: string
-): ReactElement => {
-	return (
-		<nav {...(ariaLabel && { "aria-label": ariaLabel })}>
-			<ul className="carousel flex overflow-x-hidden">{items}</ul>
-		</nav>
-	);
-};
+type CarouselProps = CarouselPropsBase & CarouselPropsVariant;
 
 export const Carousel = (props: CarouselProps) => {
-	const { ariaLabel, type } = props;
-
-	if (type === "loader") {
-		return navWrapper(
-			Array.from({ length: 20 }).map((_, index) => (
-				<CarouselItem key={index} type="loader" />
-			)),
-			ariaLabel
-		);
-	}
-
-	if (type === "link") {
-		const { data } = props;
-
-		return navWrapper(
-			data.map((item) => (
-				<CarouselItem key={item.slug} type="link" data={item} />
-			)),
-			ariaLabel
-		);
-	}
-
-	if (type === "handler") {
-		const { data, initialItem } = props;
-
-		return navWrapper(
-			data.map((item) => (
-				<CarouselItem
-					key={item.slug}
-					type="handler"
-					data={item}
-					initialItem={initialItem}
-				/>
-			)),
-			ariaLabel
-		);
-	}
+	return (
+		<nav {...(props.ariaLabel && { "aria-label": props.ariaLabel })}>
+			<div className="overflow-x-hidden">
+				<ul className="flex">
+					<CarouselItems {...props} />
+				</ul>
+			</div>
+		</nav>
+	);
 };
