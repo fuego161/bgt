@@ -16,7 +16,7 @@ type CarouselItemProps =
 	| {
 			type: "handler";
 			data: CarouselItemHandlerProps;
-			category?: string;
+			initialItem?: string;
 	  };
 
 const itemWrapper = (item: ReactElement): ReactElement => {
@@ -77,10 +77,11 @@ export const CarouselItem = (props: CarouselItemProps) => {
 	}
 
 	if (props.type === "handler") {
-		const { data, category } = props;
+		const { data, initialItem } = props;
 		const { title, slug, onSelect } = data;
 
-		const active = category === slug || (title === "All" && !category);
+		const active =
+			initialItem === slug || (title === "All" && !initialItem);
 
 		return itemWrapper(
 			<button

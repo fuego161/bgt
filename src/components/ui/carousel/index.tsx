@@ -23,7 +23,7 @@ type CarouselProps =
 			type: "handler";
 			ariaLabel?: string;
 			data: CarouselItemHandlerProps[];
-			category?: string;
+			initialItem?: string;
 	  };
 
 const navWrapper = (
@@ -61,7 +61,7 @@ export const Carousel = (props: CarouselProps) => {
 	}
 
 	if (type === "handler") {
-		const { data, category } = props;
+		const { data, initialItem } = props;
 
 		return navWrapper(
 			data.map((item) => (
@@ -69,7 +69,7 @@ export const Carousel = (props: CarouselProps) => {
 					key={item.slug}
 					type="handler"
 					data={item}
-					category={category}
+					initialItem={initialItem}
 				/>
 			)),
 			ariaLabel

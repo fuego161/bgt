@@ -58,7 +58,7 @@ export const CategoriesCarouselInteractiveItems = ({
 			ariaLabel="Categories"
 			data={categoryHandlers}
 			type="handler"
-			category={category}
+			initialItem={category}
 		/>
 	);
 };

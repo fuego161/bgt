@@ -1,4 +1,3 @@
-
 import { Carousel } from "@/components/ui/carousel";
 import { CategoriesCarouselInteractiveItems } from "@/components/ui/categories-carousel/interactive-items";
 import prisma from "@/lib/prisma";
