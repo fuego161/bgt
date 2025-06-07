@@ -84,8 +84,15 @@ export const CarouselItem = (props: CarouselItemProps) => {
 
 		return itemWrapper(
 			<button
-				className={buttonVariants({ intent: "handler", active })}
+				className={buttonVariants({
+					intent: "handler",
+					active,
+					disabledHandler: active,
+				})}
 				onClick={() => onSelect?.(slug)}
+				disabled={active}
+				aria-disabled={active}
+				tabIndex={active ? -1 : undefined}
 			>
 				{title}
 			</button>

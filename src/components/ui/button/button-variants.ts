@@ -17,16 +17,21 @@ export const buttonVariants = cva(
 				false: null,
 				true: "opacity-75 cursor-not-allowed",
 			},
+			disabledHandler: {
+				false: null,
+				true: "pointer-events-none",
+			},
 			hoverable: {
 				true: "transition-colors hover:bg-zinc-600/80",
 				false: null,
 			},
 		},
 		defaultVariants: {
-			disabled: false,
 			intent: "primary",
-			hoverable: true,
 			active: false,
+			disabled: false,
+			disabledHandler: false,
+			hoverable: true,
 		},
 	}
 );
