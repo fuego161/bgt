@@ -16,6 +16,18 @@ export type CarouselPropsVariant =
 			data: CarouselItemHandlerProps[];
 			initialItem?: string;
 	  };
+
+type ExpandCarouselProps<T> = T extends { type: infer U }
+	? U extends "loader"
+		? T
+		: U extends "link" | "handler"
+		? T & { collectSize: (index: number) => (size: number) => void }
+		: never
+	: never;
+
+export type CarouselItemsPropsVariant =
+	ExpandCarouselProps<CarouselPropsVariant>;
+
 export interface CarouselItemLinkProps {
 	title: string;
 	slug: string;

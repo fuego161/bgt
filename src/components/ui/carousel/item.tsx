@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 import { buttonVariants } from "@/components/ui/button/button-variants";
 
@@ -11,20 +12,45 @@ import type {
 import type { ReactElement } from "react";
 
 type CarouselItemProps =
-	| { type: "loader" }
-	| { type: "link"; data: CarouselItemLinkProps }
+	| { type: "loader"; collectSize?: undefined; index?: undefined }
+	| {
+			type: "link";
+			data: CarouselItemLinkProps;
+			collectSize: (index: number) => (size: number) => void;
+			index: number;
+	  }
 	| {
 			type: "handler";
 			data: CarouselItemHandlerProps;
 			initialItem?: string;
+			collectSize: (index: number) => (size: number) => void;
+			index: number;
 	  };
 
-const itemWrapper = (item: ReactElement): ReactElement => {
-	return <li className="mr-3 last-of-type:mr-0">{item}</li>;
+const itemWrapper = (
+	item: ReactElement,
+	ref?: React.RefObject<HTMLLIElement | null>
+): ReactElement => {
+	return (
+		<li ref={ref} className="mr-3 last-of-type:mr-0">
+			{item}
+		</li>
+	);
 };
 
 export const CarouselItem = (props: CarouselItemProps) => {
-	if (props.type === "loader") {
+	const ref = useRef<HTMLLIElement | null>(null);
+
+	const { type, collectSize, index } = props;
+
+	useEffect(() => {
+		if (ref.current && type !== "loader") {
+			const width = ref.current.offsetWidth;
+			collectSize(index)(width);
+		}
+	}, [type, collectSize, index]);
+
+	if (type === "loader") {
 		return itemWrapper(
 			<button
 				className={buttonVariants({
@@ -41,9 +67,8 @@ export const CarouselItem = (props: CarouselItemProps) => {
 		);
 	}
 
-	if (props.type === "link") {
-		const { data } = props;
-		const { title, link, disabled } = data;
+	if (type === "link") {
+		const { title, link, disabled } = props.data;
 
 		if (disabled) {
 			return itemWrapper(
@@ -55,7 +80,8 @@ export const CarouselItem = (props: CarouselItemProps) => {
 					})}
 				>
 					{title}
-				</span>
+				</span>,
+				ref
 			);
 		}
 
@@ -71,12 +97,13 @@ export const CarouselItem = (props: CarouselItemProps) => {
 					}}
 				>
 					{title}
-				</Link>
+				</Link>,
+				ref
 			);
 		}
 	}
 
-	if (props.type === "handler") {
+	if (type === "handler") {
 		const { data, initialItem } = props;
 		const { title, slug, onSelect } = data;
 
@@ -96,7 +123,8 @@ export const CarouselItem = (props: CarouselItemProps) => {
 				tabIndex={active ? -1 : undefined}
 			>
 				{title}
-			</button>
+			</button>,
+			ref
 		);
 	}
 

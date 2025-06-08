@@ -2,9 +2,9 @@
 
 import { CarouselItem } from "@/components/ui/carousel/item";
 
-import type { CarouselPropsVariant } from "@/types/ui/carousel";
+import type { CarouselItemsPropsVariant } from "@/types/ui/carousel";
 
-type CarouselItems = CarouselPropsVariant;
+type CarouselItems = CarouselItemsPropsVariant;
 
 export const CarouselItems = (props: CarouselItems) => {
 	const { type } = props;
@@ -16,22 +16,30 @@ export const CarouselItems = (props: CarouselItems) => {
 	}
 
 	if (type === "link") {
-		const { data } = props;
+		const { data, collectSize } = props;
 
-		return data.map((item) => (
-			<CarouselItem key={item.slug} type="link" data={item} />
+		return data.map((item, index) => (
+			<CarouselItem
+				key={item.slug}
+				type="link"
+				data={item}
+				collectSize={collectSize}
+				index={index}
+			/>
 		));
 	}
 
 	if (type === "handler") {
-		const { data, initialItem } = props;
+		const { data, initialItem, collectSize } = props;
 
-		return data.map((item) => (
+		return data.map((item, index) => (
 			<CarouselItem
 				key={item.slug}
 				type="handler"
 				data={item}
 				initialItem={initialItem}
+				collectSize={collectSize}
+				index={index}
 			/>
 		));
 	}
