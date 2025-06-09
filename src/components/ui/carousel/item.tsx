@@ -37,10 +37,13 @@ const itemWrapper = (
 	gapSize: number,
 	ref?: React.RefObject<HTMLLIElement | null>
 ): ReactElement => {
-	// Explicit output of sizing options for Tailwind compiler mr-[8px] | mr-[12px] | mr-[16px] | mr-[24px] | mr-[32px] | mr-[48px]
 	return (
 		<>
-			<li ref={ref} className={`mr-[${gapSize}px] last-of-type:mr-0`}>
+			<li
+				ref={ref}
+				style={{ marginRight: gapSize }}
+				className={`mr-[${gapSize}px] last-of-type:mr-0`}
+			>
 				{item}
 			</li>
 		</>
