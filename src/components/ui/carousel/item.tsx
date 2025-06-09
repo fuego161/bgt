@@ -11,7 +11,10 @@ import type {
 } from "@/types/ui/carousel";
 import type { ReactElement } from "react";
 
-type CarouselItemProps =
+interface CarouselItemPropsBase {
+	gapSize: number;
+}
+type CarouselItemPropsVariant =
 	| { type: "loader"; collectSize?: undefined; index?: undefined }
 	| {
 			type: "link";
@@ -27,21 +30,27 @@ type CarouselItemProps =
 			index: number;
 	  };
 
+type CarouselItemProps = CarouselItemPropsBase & CarouselItemPropsVariant;
+
 const itemWrapper = (
 	item: ReactElement,
+	gapSize: number,
 	ref?: React.RefObject<HTMLLIElement | null>
 ): ReactElement => {
+	// Explicit output of sizing options for Tailwind compiler mr-[8px] | mr-[12px] | mr-[16px] | mr-[24px] | mr-[32px] | mr-[48px]
 	return (
-		<li ref={ref} className="mr-3 last-of-type:mr-0">
-			{item}
-		</li>
+		<>
+			<li ref={ref} className={`mr-[${gapSize}px] last-of-type:mr-0`}>
+				{item}
+			</li>
+		</>
 	);
 };
 
 export const CarouselItem = (props: CarouselItemProps) => {
 	const ref = useRef<HTMLLIElement | null>(null);
 
-	const { type, collectSize, index } = props;
+	const { type, collectSize, index, gapSize } = props;
 
 	useEffect(() => {
 		if (ref.current && type !== "loader") {
@@ -63,7 +72,8 @@ export const CarouselItem = (props: CarouselItemProps) => {
 				tabIndex={-1}
 			>
 				&nbsp;
-			</button>
+			</button>,
+			gapSize
 		);
 	}
 
@@ -81,6 +91,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 				>
 					{title}
 				</span>,
+				gapSize,
 				ref
 			);
 		}
@@ -98,6 +109,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 				>
 					{title}
 				</Link>,
+				gapSize,
 				ref
 			);
 		}
@@ -124,6 +136,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 			>
 				{title}
 			</button>,
+			gapSize,
 			ref
 		);
 	}

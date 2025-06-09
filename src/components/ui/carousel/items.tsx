@@ -4,14 +4,17 @@ import { CarouselItem } from "@/components/ui/carousel/item";
 
 import type { CarouselItemsPropsVariant } from "@/types/ui/carousel";
 
-type CarouselItems = CarouselItemsPropsVariant;
+interface CarouselItemsPropsBase {
+	gapSize: number;
+}
+type CarouselItemsProps = CarouselItemsPropsBase & CarouselItemsPropsVariant;
 
-export const CarouselItems = (props: CarouselItems) => {
-	const { type } = props;
+export const CarouselItems = (props: CarouselItemsProps) => {
+	const { type, gapSize } = props;
 
 	if (type === "loader") {
 		return Array.from({ length: 20 }).map((_, index) => (
-			<CarouselItem key={index} type="loader" />
+			<CarouselItem key={index} type="loader" gapSize={gapSize} />
 		));
 	}
 
@@ -25,6 +28,7 @@ export const CarouselItems = (props: CarouselItems) => {
 				data={item}
 				collectSize={collectSize}
 				index={index}
+				gapSize={gapSize}
 			/>
 		));
 	}
@@ -40,6 +44,7 @@ export const CarouselItems = (props: CarouselItems) => {
 				initialItem={initialItem}
 				collectSize={collectSize}
 				index={index}
+				gapSize={gapSize}
 			/>
 		));
 	}

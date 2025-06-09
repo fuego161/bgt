@@ -6,15 +6,17 @@ import { CarouselItems } from "@/components/ui/carousel/items";
 
 import type { CarouselPropsVariant } from "@/types/ui/carousel";
 
+export type GapSizes = 8 | 12 | 16 | 24 | 32 | 48;
+
 interface CarouselPropsBase {
 	ariaLabel: string;
-	gapSize?: number;
+	gapSize?: GapSizes;
 }
 
 type CarouselProps = CarouselPropsBase & CarouselPropsVariant;
 
 export const Carousel = (props: CarouselProps) => {
-	const gapSize = props.gapSize ?? 12;
+	const gapSize: GapSizes = props.gapSize ?? 12;
 
 	const [itemSizes, setItemSizes] = useState<number[]>([]);
 	const [carouselLength, setCarouselLength] = useState<number>();
@@ -45,14 +47,15 @@ export const Carousel = (props: CarouselProps) => {
 		[]
 	);
 
-	console.log(props.type, itemSizes);
-	console.log(carouselLength);
-
 	const carouselItems: ReactElement =
 		props.type === "loader" ? (
-			<CarouselItems {...props} />
+			<CarouselItems {...props} gapSize={gapSize} />
 		) : (
-			<CarouselItems {...props} collectSize={collectSize} />
+			<CarouselItems
+				{...props}
+				collectSize={collectSize}
+				gapSize={gapSize}
+			/>
 		);
 
 	return (
