@@ -12,6 +12,7 @@ export type GapSizes = 8 | 12 | 16 | 24 | 32 | 48;
 interface CarouselPropsBase {
 	ariaLabel: string;
 	gapSize?: GapSizes;
+	scrollJump?: number;
 }
 
 type CarouselProps = CarouselPropsBase & CarouselPropsVariant;
@@ -31,10 +32,12 @@ const disabledBtnAttrs = (isDisabled: boolean) => {
 export const Carousel = (props: CarouselProps) => {
 	// Set defaults
 	const gapSize: GapSizes = props.gapSize ?? 12;
+	const scrollJump = props.scrollJump ?? 9;
 
 	const [itemSizes, setItemSizes] = useState<number[]>([]);
 	const [carouselLength, setCarouselLength] = useState<number>(0);
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
+	const [indexPosition, setIndexPosition] = useState<number>(0);
 	const [carouselElementWidth, setCarouselElementWidth] = useState<number>(0);
 	const ref = useRef<HTMLUListElement>(null);
 
@@ -74,6 +77,44 @@ export const Carousel = (props: CarouselProps) => {
 		[]
 	);
 
+	const clickScroll = (direction: "left" | "right") => {
+		// Collect the next index depending on the direction
+		// Take the current index and then either add or remove the scroll jump to get the next index
+		// Use Math max/min to set fall backs of either the start or end of the carousel to stop overshooting
+		const nextIndex =
+			direction === "left"
+				? Math.max(indexPosition - scrollJump, 0)
+				: Math.min(indexPosition + scrollJump, itemSizes.length);
+
+		// Get the item sizes of the items we're going to jump over
+		const upcomingItems =
+			direction === "left"
+				? itemSizes.slice(nextIndex, indexPosition)
+				: itemSizes.slice(indexPosition, nextIndex);
+
+		// Check to see if we're going to be at the end
+		const end = nextIndex === itemSizes.length;
+		// Calculate the gap total, if we're at the end account for the last item and remove its gap
+		const gapTotal = end ? gapSize * scrollJump - 1 : gapSize * scrollJump;
+
+		// Calculate the amount we need to scroll based on the sizes of the upcoming items
+		// Make sure we include the gap between the number of items we're jumping
+		const amountToScroll = upcomingItems.reduce((a, b) => a + b, gapTotal);
+
+		// Get the new scroll position, with min/max fall backs to stop scroll overshooting
+		const newScrollPosition =
+			direction === "left"
+				? Math.max(0, scrollPosition - amountToScroll)
+				: Math.min(
+						scrollPosition + amountToScroll,
+						carouselLength - carouselElementWidth
+				  );
+
+		// TODO: look at having right scrolls sit flush with index items
+		setIndexPosition(nextIndex);
+		setScrollPosition(newScrollPosition);
+	};
+
 	const carouselItems: ReactElement =
 		props.type === "loader" ? (
 			<CarouselItems {...props} gapSize={gapSize} />
@@ -95,6 +136,7 @@ export const Carousel = (props: CarouselProps) => {
 						atStart && "hidden"
 					)}
 					{...disabledBtnAttrs(atStart)}
+					onClick={() => clickScroll("left")}
 				>
 					<span>&#x2190;</span>
 				</button>
@@ -116,6 +158,7 @@ export const Carousel = (props: CarouselProps) => {
 						atEnd && "hidden"
 					)}
 					{...disabledBtnAttrs(atEnd)}
+					onClick={() => clickScroll("right")}
 				>
 					<span>&#x2192;</span>
 				</button>
