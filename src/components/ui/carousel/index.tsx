@@ -32,7 +32,7 @@ const disabledBtnAttrs = (isDisabled: boolean) => {
 export const Carousel = (props: CarouselProps) => {
 	// Set defaults
 	const gapSize: GapSizes = props.gapSize ?? 12;
-	const scrollJump = props.scrollJump ?? 9;
+	const scrollJump = props.scrollJump ?? 4;
 
 	const [itemSizes, setItemSizes] = useState<number[]>([]);
 	const [carouselLength, setCarouselLength] = useState<number>(0);
@@ -77,6 +77,39 @@ export const Carousel = (props: CarouselProps) => {
 		[]
 	);
 
+	const scrollToIndex = (index: number) => {
+		// If we're trying to reach an invalid index, instantly break out
+		if (index < 0 || index > itemSizes.length) return;
+
+		// If the next index is the start, just action the movement
+		if (index === 0) {
+			setIndexPosition(index);
+			setScrollPosition(0);
+			return;
+		}
+
+		// Check to see if we're going to be at the end
+		const end = index === itemSizes.length;
+		// Calculate the gap total, if we're at the end account for the last item and remove its gap
+		const gapTotal = end ? gapSize * (index - 1) : gapSize * index;
+
+		// Calculate the new scroll position based on the sizes of the items between the start and the current index
+		// Make sure to include the gap total
+		// This method means that items will always be flush left, even if moving the end would break the position pattern
+		const newScrollPosition = itemSizes
+			.slice(0, index)
+			.reduce((a, b) => a + b, gapTotal);
+
+		// Update the scroll position with min/max fall backs to stop scroll overshooting
+		const safeScrollPosition = Math.min(
+			Math.max(0, newScrollPosition),
+			carouselLength - carouselElementWidth
+		);
+
+		setIndexPosition(index);
+		setScrollPosition(safeScrollPosition);
+	};
+
 	const clickScroll = (direction: "left" | "right") => {
 		// Collect the next index depending on the direction
 		// Take the current index and then either add or remove the scroll jump to get the next index
@@ -86,33 +119,7 @@ export const Carousel = (props: CarouselProps) => {
 				? Math.max(indexPosition - scrollJump, 0)
 				: Math.min(indexPosition + scrollJump, itemSizes.length);
 
-		// Get the item sizes of the items we're going to jump over
-		const upcomingItems =
-			direction === "left"
-				? itemSizes.slice(nextIndex, indexPosition)
-				: itemSizes.slice(indexPosition, nextIndex);
-
-		// Check to see if we're going to be at the end
-		const end = nextIndex === itemSizes.length;
-		// Calculate the gap total, if we're at the end account for the last item and remove its gap
-		const gapTotal = end ? gapSize * scrollJump - 1 : gapSize * scrollJump;
-
-		// Calculate the amount we need to scroll based on the sizes of the upcoming items
-		// Make sure we include the gap between the number of items we're jumping
-		const amountToScroll = upcomingItems.reduce((a, b) => a + b, gapTotal);
-
-		// Get the new scroll position, with min/max fall backs to stop scroll overshooting
-		const newScrollPosition =
-			direction === "left"
-				? Math.max(0, scrollPosition - amountToScroll)
-				: Math.min(
-						scrollPosition + amountToScroll,
-						carouselLength - carouselElementWidth
-				  );
-
-		// TODO: look at having right scrolls sit flush with index items
-		setIndexPosition(nextIndex);
-		setScrollPosition(newScrollPosition);
+		scrollToIndex(nextIndex);
 	};
 
 	const carouselItems: ReactElement =
