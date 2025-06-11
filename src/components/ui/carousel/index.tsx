@@ -13,6 +13,7 @@ interface CarouselPropsBase {
 	ariaLabel: string;
 	gapSize?: GapSizes;
 	scrollJump?: number;
+	activeIndex?: number;
 }
 
 type CarouselProps = CarouselPropsBase & CarouselPropsVariant;
@@ -34,15 +35,47 @@ export const Carousel = (props: CarouselProps) => {
 	const gapSize: GapSizes = props.gapSize ?? 12;
 	const scrollJump = props.scrollJump ?? 4;
 
+	const ref = useRef<HTMLUListElement>(null);
+
 	const [itemSizes, setItemSizes] = useState<number[]>([]);
 	const [carouselLength, setCarouselLength] = useState<number>(0);
-	const [scrollPosition, setScrollPosition] = useState<number>(0);
-	const [indexPosition, setIndexPosition] = useState<number>(0);
 	const [carouselElementWidth, setCarouselElementWidth] = useState<number>(0);
-	const ref = useRef<HTMLUListElement>(null);
+
+	const [indexPosition, setIndexPosition] = useState<number>(0);
+	const [scrollPosition, setScrollPosition] = useState<number>(0);
 
 	const atStart = scrollPosition === 0;
 	const atEnd = scrollPosition >= carouselLength - carouselElementWidth;
+
+	const calculateScrollPosition = useCallback(
+		(index: number) => {
+			// If we're trying to reach an invalid index, instantly break out
+			if (index < 0 || index > itemSizes.length) return 0;
+
+			if (index === 0) {
+				return 0;
+			}
+
+			// Check to see if we're going to be at the end
+			const end = index === itemSizes.length;
+			// Calculate the gap total, if we're at the end account for the last item and remove its gap
+			const gapTotal = end ? gapSize * (index - 1) : gapSize * index;
+
+			// Calculate the new scroll position based on the sizes of the items between the start and the current index
+			// Make sure to include the gap total
+			// This method means that items will always be flush left, even if moving the end would break the position pattern
+			const newScrollPosition = itemSizes
+				.slice(0, index)
+				.reduce((a, b) => a + b, gapTotal);
+
+			// Update the scroll position with min/max fall backs to stop scroll overshooting
+			return Math.min(
+				Math.max(0, newScrollPosition),
+				carouselLength - carouselElementWidth
+			);
+		},
+		[itemSizes, gapSize, carouselLength, carouselElementWidth]
+	);
 
 	useEffect(() => {
 		// Get the amount of items stored
@@ -53,16 +86,35 @@ export const Carousel = (props: CarouselProps) => {
 
 		// Calculate the combined size of all the items
 		const itemsCombinedSize = itemSizes.reduce((a, b) => a + b, 0);
-		// Calculate the amount of gap between all the items, removing 1 for the final flush item
+		// Calculate the amount of gap between all the items, excluding the final gap after the last item
 		const combinedGapSize = gapSize * (itemCount - 1);
 
 		setCarouselLength(itemsCombinedSize + combinedGapSize);
 	}, [itemSizes, gapSize]);
 
+	useEffect(() => {
+		if (
+			itemSizes.length === 0 ||
+			carouselLength === 0 ||
+			carouselElementWidth === 0 ||
+			props.activeIndex === undefined
+		)
+			return;
+
+		setScrollPosition(calculateScrollPosition(props.activeIndex));
+		setIndexPosition(props.activeIndex);
+	}, [
+		itemSizes,
+		carouselLength,
+		carouselElementWidth,
+		props.activeIndex,
+		calculateScrollPosition,
+	]);
+
 	// TODO: Update on page size change
 	useEffect(() => {
 		if (ref.current) {
-			setCarouselElementWidth(ref?.current?.offsetWidth);
+			setCarouselElementWidth(ref.current.offsetWidth);
 		}
 	}, []);
 
@@ -88,26 +140,8 @@ export const Carousel = (props: CarouselProps) => {
 			return;
 		}
 
-		// Check to see if we're going to be at the end
-		const end = index === itemSizes.length;
-		// Calculate the gap total, if we're at the end account for the last item and remove its gap
-		const gapTotal = end ? gapSize * (index - 1) : gapSize * index;
-
-		// Calculate the new scroll position based on the sizes of the items between the start and the current index
-		// Make sure to include the gap total
-		// This method means that items will always be flush left, even if moving the end would break the position pattern
-		const newScrollPosition = itemSizes
-			.slice(0, index)
-			.reduce((a, b) => a + b, gapTotal);
-
-		// Update the scroll position with min/max fall backs to stop scroll overshooting
-		const safeScrollPosition = Math.min(
-			Math.max(0, newScrollPosition),
-			carouselLength - carouselElementWidth
-		);
-
 		setIndexPosition(index);
-		setScrollPosition(safeScrollPosition);
+		setScrollPosition(calculateScrollPosition(index));
 	};
 
 	const clickScroll = (direction: "left" | "right") => {
@@ -134,12 +168,12 @@ export const Carousel = (props: CarouselProps) => {
 		);
 
 	return (
-		<nav {...(props.ariaLabel && { "aria-label": props.ariaLabel })}>
+		<nav aria-label={props.ariaLabel}>
 			<div className="relative overflow-x-hidden">
 				<button
 					className={clsx(
 						directionBtnStyles,
-						"left-0 ",
+						"left-0",
 						atStart && "hidden"
 					)}
 					{...disabledBtnAttrs(atStart)}
@@ -152,7 +186,7 @@ export const Carousel = (props: CarouselProps) => {
 					style={{
 						transform: `translateX(-${scrollPosition}px)`,
 					}}
-					className="flex py-1 transition-transform ease-in-out"
+					className="flex py-1 transition-transform ease-in-out scroll-smooth"
 					ref={ref}
 				>
 					{carouselItems}

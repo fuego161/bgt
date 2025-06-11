@@ -18,9 +18,19 @@ export const CategoriesCarouselInteractiveItems = ({
 }: CategoriesCarouselInteractiveItemsProps) => {
 	const router = useRouter();
 
-	const categoryHandlers: CarouselItemHandlerProps[] = [];
+	const categoryHandlers: CarouselItemHandlerProps[] = [
+		{
+			title: "All",
+			slug: "",
+			onSelect: () => {
+				// Remove the category search param and push to router to reset to all games
+				const url = new URL(window.location.href);
 
-	categoryHandlers.push(
+				url.searchParams.delete("category");
+
+				router.push(url.href);
+			},
+		},
 		...categories.map(
 			({ title, slug }): CarouselItemHandlerProps => ({
 				title,
@@ -37,21 +47,12 @@ export const CategoriesCarouselInteractiveItems = ({
 					router.push(url.href);
 				},
 			})
-		)
-	);
+		),
+	];
 
-	categoryHandlers.unshift({
-		title: "All",
-		slug: "",
-		onSelect: () => {
-			// Remove the category search param and push to router to reset to all games
-			const url = new URL(window.location.href);
-
-			url.searchParams.delete("category");
-
-			router.push(url.href);
-		},
-	});
+	const activeIndex = category
+		? categoryHandlers.findIndex((cat) => cat.slug === category)
+		: 0;
 
 	return (
 		<Carousel
@@ -59,6 +60,7 @@ export const CategoriesCarouselInteractiveItems = ({
 			data={categoryHandlers}
 			type="handler"
 			initialItem={category}
+			activeIndex={activeIndex}
 		/>
 	);
 };
