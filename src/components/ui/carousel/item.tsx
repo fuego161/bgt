@@ -39,11 +39,7 @@ const itemWrapper = (
 ): ReactElement => {
 	return (
 		<>
-			<li
-				ref={ref}
-				style={{ marginRight: gapSize }}
-				className={`mr-[${gapSize}px] last-of-type:mr-0`}
-			>
+			<li ref={ref} style={{ marginRight: gapSize }}>
 				{item}
 			</li>
 		</>
