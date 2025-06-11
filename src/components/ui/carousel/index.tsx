@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import clsx from "clsx";
+import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 
 import { CarouselItems } from "@/components/ui/carousel/items";
 
@@ -15,11 +16,30 @@ interface CarouselPropsBase {
 
 type CarouselProps = CarouselPropsBase & CarouselPropsVariant;
 
+const directionBtnStyles =
+	"absolute top-0 bottom-0 bg-pink-300 px-2 z-20 opacity-25";
+
+const disabledBtnAttrs = (isDisabled: boolean) => {
+	return {
+		disabled: isDisabled,
+		"aria-disabled": isDisabled,
+		"aria-hidden": isDisabled,
+		tabIndex: isDisabled ? -1 : undefined,
+	};
+};
+
 export const Carousel = (props: CarouselProps) => {
+	// Set defaults
 	const gapSize: GapSizes = props.gapSize ?? 12;
 
 	const [itemSizes, setItemSizes] = useState<number[]>([]);
-	const [carouselLength, setCarouselLength] = useState<number>();
+	const [carouselLength, setCarouselLength] = useState<number>(0);
+	const [scrollPosition, setScrollPosition] = useState<number>(0);
+	const [carouselElementWidth, setCarouselElementWidth] = useState<number>(0);
+	const ref = useRef<HTMLUListElement>(null);
+
+	const atStart = scrollPosition === 0;
+	const atEnd = scrollPosition >= carouselLength - carouselElementWidth;
 
 	useEffect(() => {
 		// Get the amount of items stored
@@ -35,6 +55,13 @@ export const Carousel = (props: CarouselProps) => {
 
 		setCarouselLength(itemsCombinedSize + combinedGapSize);
 	}, [itemSizes, gapSize]);
+
+	// TODO: Update on page size change
+	useEffect(() => {
+		if (ref.current) {
+			setCarouselElementWidth(ref?.current?.offsetWidth);
+		}
+	}, []);
 
 	const collectSize = useCallback(
 		(index: number) => (size: number) => {
@@ -62,30 +89,33 @@ export const Carousel = (props: CarouselProps) => {
 		<nav {...(props.ariaLabel && { "aria-label": props.ariaLabel })}>
 			<div className="relative overflow-x-hidden">
 				<button
-					className="absolute left-0 top-0 bottom-0 bg-pink-300 px-2 z-20"
-
-					// className={buttonVariants({
-					// 	intent: "primary",
-					// })}
-					// disabled
-					// aria-disabled="true"
-					// aria-hidden="true"
-					// tabIndex={-1}
+					className={clsx(
+						directionBtnStyles,
+						"left-0 ",
+						atStart && "hidden"
+					)}
+					{...disabledBtnAttrs(atStart)}
 				>
 					<span>&#x2190;</span>
 				</button>
 
-				<ul className="flex py-1">{carouselItems}</ul>
+				<ul
+					style={{
+						transform: `translateX(-${scrollPosition}px)`,
+					}}
+					className="flex py-1 transition-transform ease-in-out"
+					ref={ref}
+				>
+					{carouselItems}
+				</ul>
 
 				<button
-					className="absolute right-0 top-0 bottom-0 bg-pink-300 px-2 z-20"
-					// className={buttonVariants({
-					// 	intent: "primary",
-					// })}
-					// disabled
-					// aria-disabled="true"
-					// aria-hidden="true"
-					// tabIndex={-1}
+					className={clsx(
+						directionBtnStyles,
+						"right-0",
+						atEnd && "hidden"
+					)}
+					{...disabledBtnAttrs(atEnd)}
 				>
 					<span>&#x2192;</span>
 				</button>
