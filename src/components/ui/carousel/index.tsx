@@ -60,7 +60,7 @@ export const Carousel = (props: CarouselProps) => {
 		(index: number, safePosition = true): number => {
 			// If we're trying to reach an invalid index, instantly break out
 			// Also covers 0 index being used, passes back the correct position of 0
-			if (index <= 0 || index > itemSizes.length) return 0;
+			if (index <= 0 || index > itemSizes.length - 1) return 0;
 
 			// Check to see if we're going to be at the end of the carousel
 			const end = index === itemSizes.length;
@@ -115,21 +115,61 @@ export const Carousel = (props: CarouselProps) => {
 			return;
 
 		// Get the active index
-		const index = props.activeIndex;
+		const activeIndex = props.activeIndex;
 		// Calculate the start "scroll" position of the active index
-		const itemStart = calculateScrollPosition(index, false);
+		const itemStart = calculateScrollPosition(activeIndex, false);
 		// Using the stored item sizes get the end of the item
-		const itemEnd = itemStart + itemSizes[index];
+		const itemEnd = itemStart + itemSizes[activeIndex];
 
 		// Check to see if the start and end of the item are within the visible portion of the carousel
 		const withinView =
 			itemStart >= scrollPosition &&
 			itemEnd <= scrollPosition + carouselElementWidth;
 
+		/**
+		 * The active index might point to an item that technically fits in the scrollable area
+		 * but doesn't trigger a scroll due to scrollJump increments.
+		 * For example, if the last item requires several small scrolls to reach,
+		 * the carousel may not visibly move when setting that index directly.
+		 *
+		 * To avoid this, we calculate the last scroll-aligned index before the maximum scroll boundary
+		 * and use that instead, ensuring the scroll behaves consistently with click-based navigation.
+		 */
+
+		// Calculate the maximum scrollable position
+		const maxScrollPosition = carouselLength - carouselElementWidth;
+
+		// Default to the active index; may adjust if it's out of scroll range
+		let newIndex = activeIndex;
+
+		// Check to see if the items start position is over the max scroll position
+		if (itemStart > maxScrollPosition) {
+			// Set a running size total we'll add to
+			let runningTotal = 0;
+
+			// Loop over the itemSizes
+			// Using entries to grab the index
+			for (const [index, itemSize] of itemSizes.entries()) {
+				// Add to the running size total
+				runningTotal += itemSize + gapSize;
+
+				// If the running size total is over the max scroll position
+				// And the current index fits within a natural scroll jump group break out
+				if (
+					runningTotal > maxScrollPosition &&
+					index % scrollJump === 0
+				) {
+					// Set the new index
+					newIndex = index;
+					break;
+				}
+			}
+		}
+
 		// If it's not in view, update the scroll position and index
 		if (!withinView) {
-			setScrollPosition(calculateScrollPosition(props.activeIndex));
-			setIndexPosition(props.activeIndex);
+			setScrollPosition(calculateScrollPosition(newIndex));
+			setIndexPosition(newIndex);
 		}
 
 		// Set the initial position update to true to stop this firing
@@ -142,6 +182,8 @@ export const Carousel = (props: CarouselProps) => {
 		props.activeIndex,
 		calculateScrollPosition,
 		scrollPosition,
+		gapSize,
+		scrollJump,
 	]);
 
 	// TODO: Update on page size change
@@ -171,10 +213,10 @@ export const Carousel = (props: CarouselProps) => {
 	 */
 	const scrollToIndex = (index: number): void => {
 		// If we're trying to reach an invalid index, instantly break out
-		if (index < 0 || index > itemSizes.length) return;
+		if (index < 0 || index > itemSizes.length - 1) return;
 
 		setIndexPosition(index);
-		setScrollPosition(index === 0 ? index : calculateScrollPosition(index));
+		setScrollPosition(calculateScrollPosition(index));
 	};
 
 	/**
