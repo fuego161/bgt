@@ -40,6 +40,8 @@ export const Carousel = (props: CarouselProps) => {
 	const [itemSizes, setItemSizes] = useState<number[]>([]);
 	const [carouselLength, setCarouselLength] = useState<number>(0);
 	const [carouselElementWidth, setCarouselElementWidth] = useState<number>(0);
+	const [initialPositionUpdate, setInitialPositionUpdate] =
+		useState<boolean>(false);
 
 	const [indexPosition, setIndexPosition] = useState<number>(0);
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -47,16 +49,20 @@ export const Carousel = (props: CarouselProps) => {
 	const atStart = scrollPosition === 0;
 	const atEnd = scrollPosition >= carouselLength - carouselElementWidth;
 
+	/**
+	 * Calculates scroll position for a given index
+	 *
+	 * @param index The target item index to calculate to (0 based)
+	 * @param safePosition Whether to constrain within limits
+	 * @returns Scroll position in pixels
+	 */
 	const calculateScrollPosition = useCallback(
-		(index: number) => {
+		(index: number, safePosition = true): number => {
 			// If we're trying to reach an invalid index, instantly break out
-			if (index < 0 || index > itemSizes.length) return 0;
+			// Also covers 0 index being used, passes back the correct position of 0
+			if (index <= 0 || index > itemSizes.length) return 0;
 
-			if (index === 0) {
-				return 0;
-			}
-
-			// Check to see if we're going to be at the end
+			// Check to see if we're going to be at the end of the carousel
 			const end = index === itemSizes.length;
 			// Calculate the gap total, if we're at the end account for the last item and remove its gap
 			const gapTotal = end ? gapSize * (index - 1) : gapSize * index;
@@ -69,10 +75,12 @@ export const Carousel = (props: CarouselProps) => {
 				.reduce((a, b) => a + b, gapTotal);
 
 			// Update the scroll position with min/max fall backs to stop scroll overshooting
-			return Math.min(
-				Math.max(0, newScrollPosition),
-				carouselLength - carouselElementWidth
-			);
+			return safePosition
+				? Math.min(
+						Math.max(0, newScrollPosition),
+						carouselLength - carouselElementWidth
+				  )
+				: newScrollPosition;
 		},
 		[itemSizes, gapSize, carouselLength, carouselElementWidth]
 	);
@@ -92,8 +100,13 @@ export const Carousel = (props: CarouselProps) => {
 		setCarouselLength(itemsCombinedSize + combinedGapSize);
 	}, [itemSizes, gapSize]);
 
+	/**
+	 * Only fires when initialPositionUpdate is set to false
+	 * If the active item is outside of the viewing boundary the position is updated so the active item is visible
+	 */
 	useEffect(() => {
 		if (
+			initialPositionUpdate ||
 			itemSizes.length === 0 ||
 			carouselLength === 0 ||
 			carouselElementWidth === 0 ||
@@ -101,14 +114,34 @@ export const Carousel = (props: CarouselProps) => {
 		)
 			return;
 
-		setScrollPosition(calculateScrollPosition(props.activeIndex));
-		setIndexPosition(props.activeIndex);
+		// Get the active index
+		const index = props.activeIndex;
+		// Calculate the start "scroll" position of the active index
+		const itemStart = calculateScrollPosition(index, false);
+		// Using the stored item sizes get the end of the item
+		const itemEnd = itemStart + itemSizes[index];
+
+		// Check to see if the start and end of the item are within the visible portion of the carousel
+		const withinView =
+			itemStart >= scrollPosition &&
+			itemEnd <= scrollPosition + carouselElementWidth;
+
+		// If it's not in view, update the scroll position and index
+		if (!withinView) {
+			setScrollPosition(calculateScrollPosition(props.activeIndex));
+			setIndexPosition(props.activeIndex);
+		}
+
+		// Set the initial position update to true to stop this firing
+		setInitialPositionUpdate(true);
 	}, [
+		initialPositionUpdate,
 		itemSizes,
 		carouselLength,
 		carouselElementWidth,
 		props.activeIndex,
 		calculateScrollPosition,
+		scrollPosition,
 	]);
 
 	// TODO: Update on page size change
@@ -129,22 +162,29 @@ export const Carousel = (props: CarouselProps) => {
 		[]
 	);
 
-	const scrollToIndex = (index: number) => {
+	/**
+	 * Scrolls the carousel to the specified index, updating scroll and index positions
+	 * Does nothing if the index is out of bounds
+	 *
+	 * @param index - The target item index to scroll to (0 based)
+	 * @returns void
+	 */
+	const scrollToIndex = (index: number): void => {
 		// If we're trying to reach an invalid index, instantly break out
 		if (index < 0 || index > itemSizes.length) return;
 
-		// If the next index is the start, just action the movement
-		if (index === 0) {
-			setIndexPosition(index);
-			setScrollPosition(0);
-			return;
-		}
-
 		setIndexPosition(index);
-		setScrollPosition(calculateScrollPosition(index));
+		setScrollPosition(index === 0 ? index : calculateScrollPosition(index));
 	};
 
-	const clickScroll = (direction: "left" | "right") => {
+	/**
+	 * Calculates the next index based on the direction and scroll jump
+	 * Goes on to call scrollToIndex to action that update
+	 *
+	 * @param direction Left or Right depending on which button was clicked
+	 * @returns void
+	 */
+	const clickScroll = (direction: "left" | "right"): void => {
 		// Collect the next index depending on the direction
 		// Take the current index and then either add or remove the scroll jump to get the next index
 		// Use Math max/min to set fall backs of either the start or end of the carousel to stop overshooting
@@ -156,6 +196,9 @@ export const Carousel = (props: CarouselProps) => {
 		scrollToIndex(nextIndex);
 	};
 
+	/**
+	 * Returns the Carousel Items component with the correct params depending on the type
+	 */
 	const carouselItems: ReactElement =
 		props.type === "loader" ? (
 			<CarouselItems {...props} gapSize={gapSize} />
