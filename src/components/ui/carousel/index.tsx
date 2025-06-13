@@ -23,13 +23,14 @@ export const Carousel = (props: CarouselProps) => {
 	const gapSize: GapSizes = props.gapSize ?? 12;
 	const scrollJump = props.scrollJump ?? 4;
 
-	const ref = useRef<HTMLUListElement>(null);
+	const ulElementRef = useRef<HTMLUListElement>(null);
 
 	const [itemSizes, setItemSizes] = useState<number[]>([]);
 	const [carouselLength, setCarouselLength] = useState<number>(0);
 	const [carouselElementWidth, setCarouselElementWidth] = useState<number>(0);
 	const [initialPositionUpdate, setInitialPositionUpdate] =
 		useState<boolean>(false);
+	const [buttonOverlayBuffer, setButtonOverlayBuffer] = useState<number>(0);
 
 	const [indexPosition, setIndexPosition] = useState<number>(0);
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -57,7 +58,7 @@ export const Carousel = (props: CarouselProps) => {
 			// This method means that items will always be flush left, even if moving the end would break the position pattern
 			const newScrollPosition = itemSizes
 				.slice(0, index)
-				.reduce((a, b) => a + b, gapTotal);
+				.reduce((a, b) => a + b, gapTotal - buttonOverlayBuffer);
 
 			// Update the scroll position with min/max fall backs to stop scroll overshooting
 			return safePosition
@@ -67,7 +68,13 @@ export const Carousel = (props: CarouselProps) => {
 				  )
 				: newScrollPosition;
 		},
-		[itemSizes, gapSize, carouselLength, carouselElementWidth]
+		[
+			itemSizes,
+			gapSize,
+			carouselLength,
+			carouselElementWidth,
+			buttonOverlayBuffer,
+		]
 	);
 
 	useEffect(() => {
@@ -173,8 +180,8 @@ export const Carousel = (props: CarouselProps) => {
 
 	// TODO: Update on page size change
 	useEffect(() => {
-		if (ref.current) {
-			setCarouselElementWidth(ref.current.offsetWidth);
+		if (ulElementRef.current) {
+			setCarouselElementWidth(ulElementRef.current.offsetWidth);
 		}
 	}, []);
 
@@ -196,13 +203,16 @@ export const Carousel = (props: CarouselProps) => {
 	 * @param index - The target item index to scroll to (0 based)
 	 * @returns void
 	 */
-	const scrollToIndex = (index: number): void => {
-		// If we're trying to reach an invalid index, instantly break out
-		if (index < 0 || index > itemSizes.length - 1) return;
+	const scrollToIndex = useCallback(
+		(index: number) => {
+			// If we're trying to reach an invalid index, instantly break out
+			if (index < 0 || index > itemSizes.length - 1) return;
 
-		setIndexPosition(index);
-		setScrollPosition(calculateScrollPosition(index));
-	};
+			setIndexPosition(index);
+			setScrollPosition(calculateScrollPosition(index));
+		},
+		[itemSizes, calculateScrollPosition]
+	);
 
 	/**
 	 * Returns the Carousel Items component with the correct params depending on the type
@@ -228,6 +238,7 @@ export const Carousel = (props: CarouselProps) => {
 			indexPosition={indexPosition}
 			itemSizes={itemSizes}
 			scrollToIndex={scrollToIndex}
+			setButtonOverlayBuffer={setButtonOverlayBuffer}
 		/>
 	);
 
@@ -240,7 +251,7 @@ export const Carousel = (props: CarouselProps) => {
 						transform: `translateX(-${scrollPosition}px)`,
 					}}
 					className="flex items-center py-2 transition-transform ease-in-out scroll-smooth px-0.5"
-					ref={ref}
+					ref={ulElementRef}
 				>
 					{carouselItems}
 				</ul>

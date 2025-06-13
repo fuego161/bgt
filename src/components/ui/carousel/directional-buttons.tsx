@@ -1,6 +1,11 @@
+"use client";
+
 import clsx from "clsx";
+import { useEffect, useRef } from "react";
 
 import { buttonVariants } from "@/components/ui/button/button-variants";
+
+import type { Dispatch, SetStateAction } from "react";
 
 interface DirectionalButtonsProps {
 	direction: "left" | "right";
@@ -11,16 +16,8 @@ interface DirectionalButtonsProps {
 	indexPosition: number;
 	itemSizes: number[];
 	scrollToIndex: (index: number) => void;
+	setButtonOverlayBuffer: Dispatch<SetStateAction<number>>;
 }
-
-const disabledBtnAttrs = (isDisabled: boolean) => {
-	return {
-		disabled: isDisabled,
-		"aria-disabled": isDisabled,
-		"aria-hidden": isDisabled,
-		tabIndex: isDisabled ? -1 : undefined,
-	};
-};
 
 export const DirectionalButtons = ({
 	direction,
@@ -31,13 +28,23 @@ export const DirectionalButtons = ({
 	indexPosition,
 	itemSizes,
 	scrollToIndex,
+	setButtonOverlayBuffer,
 }: DirectionalButtonsProps) => {
+	const buttonContainerRef = useRef<HTMLDivElement | null>(null);
+
 	const isLeft = direction === "left";
 
 	const atStart = scrollPosition === 0;
 	const atEnd = scrollPosition >= carouselLength - carouselElementWidth;
 
 	const disabledDirection = isLeft ? atStart : atEnd;
+
+	// TODO: Update on page size change
+	useEffect(() => {
+		if (buttonContainerRef.current) {
+			setButtonOverlayBuffer(buttonContainerRef.current.offsetWidth);
+		}
+	}, [setButtonOverlayBuffer]);
 
 	/**
 	 * Calculates the next index based on the direction and scroll jump
@@ -65,6 +72,7 @@ export const DirectionalButtons = ({
 				isLeft ? "left-0 pr-4" : "right-0 pl-4",
 				disabledDirection && "opacity-0 pointer-events-none"
 			)}
+			ref={buttonContainerRef}
 		>
 			<button
 				className={`${buttonVariants({
@@ -72,7 +80,10 @@ export const DirectionalButtons = ({
 					hoverable: true,
 					circle: true,
 				})} flex items-center justify-center size-9`}
-				{...disabledBtnAttrs(disabledDirection)}
+				disabled={disabledDirection}
+				aria-disabled={disabledDirection}
+				aria-hidden={disabledDirection}
+				tabIndex={disabledDirection ? -1 : undefined}
 				onClick={() => clickScroll(direction)}
 			>
 				<svg
