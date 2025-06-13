@@ -1,8 +1,8 @@
 "use client";
 
-import clsx from "clsx";
 import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 
+import { DirectionalButtons } from "@/components/ui/carousel/directional-buttons";
 import { CarouselItems } from "@/components/ui/carousel/items";
 
 import type { CarouselPropsVariant } from "@/types/ui/carousel";
@@ -17,18 +17,6 @@ interface CarouselPropsBase {
 }
 
 type CarouselProps = CarouselPropsBase & CarouselPropsVariant;
-
-const directionBtnStyles =
-	"absolute top-0 bottom-0 bg-pink-300 px-2 z-20 opacity-25";
-
-const disabledBtnAttrs = (isDisabled: boolean) => {
-	return {
-		disabled: isDisabled,
-		"aria-disabled": isDisabled,
-		"aria-hidden": isDisabled,
-		tabIndex: isDisabled ? -1 : undefined,
-	};
-};
 
 export const Carousel = (props: CarouselProps) => {
 	// Set defaults
@@ -46,9 +34,6 @@ export const Carousel = (props: CarouselProps) => {
 	const [indexPosition, setIndexPosition] = useState<number>(0);
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
 
-	const atStart = scrollPosition === 0;
-	const atEnd = scrollPosition >= carouselLength - carouselElementWidth;
-
 	/**
 	 * Calculates scroll position for a given index
 	 *
@@ -63,7 +48,7 @@ export const Carousel = (props: CarouselProps) => {
 			if (index <= 0 || index > itemSizes.length - 1) return 0;
 
 			// Check to see if we're going to be at the end of the carousel
-			const end = index === itemSizes.length;
+			const end = index === itemSizes.length - 1;
 			// Calculate the gap total, if we're at the end account for the last item and remove its gap
 			const gapTotal = end ? gapSize * (index - 1) : gapSize * index;
 
@@ -220,25 +205,6 @@ export const Carousel = (props: CarouselProps) => {
 	};
 
 	/**
-	 * Calculates the next index based on the direction and scroll jump
-	 * Goes on to call scrollToIndex to action that update
-	 *
-	 * @param direction Left or Right depending on which button was clicked
-	 * @returns void
-	 */
-	const clickScroll = (direction: "left" | "right"): void => {
-		// Collect the next index depending on the direction
-		// Take the current index and then either add or remove the scroll jump to get the next index
-		// Use Math max/min to set fall backs of either the start or end of the carousel to stop overshooting
-		const nextIndex =
-			direction === "left"
-				? Math.max(indexPosition - scrollJump, 0)
-				: Math.min(indexPosition + scrollJump, itemSizes.length);
-
-		scrollToIndex(nextIndex);
-	};
-
-	/**
 	 * Returns the Carousel Items component with the correct params depending on the type
 	 */
 	const carouselItems: ReactElement =
@@ -252,42 +218,33 @@ export const Carousel = (props: CarouselProps) => {
 			/>
 		);
 
+	const directionalButton = (direction: "left" | "right") => (
+		<DirectionalButtons
+			direction={direction}
+			carouselLength={carouselLength}
+			carouselElementWidth={carouselElementWidth}
+			scrollJump={scrollJump}
+			scrollPosition={scrollPosition}
+			indexPosition={indexPosition}
+			itemSizes={itemSizes}
+			scrollToIndex={scrollToIndex}
+		/>
+	);
+
 	return (
 		<nav aria-label={props.ariaLabel}>
 			<div className="relative overflow-x-hidden">
-				<button
-					className={clsx(
-						directionBtnStyles,
-						"left-0",
-						atStart && "hidden"
-					)}
-					{...disabledBtnAttrs(atStart)}
-					onClick={() => clickScroll("left")}
-				>
-					<span>&#x2190;</span>
-				</button>
-
+				{directionalButton("left")}
 				<ul
 					style={{
 						transform: `translateX(-${scrollPosition}px)`,
 					}}
-					className="flex py-1 transition-transform ease-in-out scroll-smooth"
+					className="flex items-center py-2 transition-transform ease-in-out scroll-smooth px-0.5"
 					ref={ref}
 				>
 					{carouselItems}
 				</ul>
-
-				<button
-					className={clsx(
-						directionBtnStyles,
-						"right-0",
-						atEnd && "hidden"
-					)}
-					{...disabledBtnAttrs(atEnd)}
-					onClick={() => clickScroll("right")}
-				>
-					<span>&#x2192;</span>
-				</button>
+				{directionalButton("right")}
 			</div>
 		</nav>
 	);

@@ -1,0 +1,93 @@
+import clsx from "clsx";
+
+import { buttonVariants } from "@/components/ui/button/button-variants";
+
+interface DirectionalButtonsProps {
+	direction: "left" | "right";
+	carouselLength: number;
+	carouselElementWidth: number;
+	scrollJump: number;
+	scrollPosition: number;
+	indexPosition: number;
+	itemSizes: number[];
+	scrollToIndex: (index: number) => void;
+}
+
+const disabledBtnAttrs = (isDisabled: boolean) => {
+	return {
+		disabled: isDisabled,
+		"aria-disabled": isDisabled,
+		"aria-hidden": isDisabled,
+		tabIndex: isDisabled ? -1 : undefined,
+	};
+};
+
+export const DirectionalButtons = ({
+	direction,
+	scrollPosition,
+	carouselLength,
+	carouselElementWidth,
+	scrollJump,
+	indexPosition,
+	itemSizes,
+	scrollToIndex,
+}: DirectionalButtonsProps) => {
+	const isLeft = direction === "left";
+
+	const atStart = scrollPosition === 0;
+	const atEnd = scrollPosition >= carouselLength - carouselElementWidth;
+
+	const disabledDirection = isLeft ? atStart : atEnd;
+
+	/**
+	 * Calculates the next index based on the direction and scroll jump
+	 * Goes on to call scrollToIndex to action that update
+	 *
+	 * @param direction Left or Right depending on which button was clicked
+	 * @returns void
+	 */
+	const clickScroll = (direction: "left" | "right"): void => {
+		// Collect the next index depending on the direction
+		// Take the current index and then either add or remove the scroll jump to get the next index
+		// Use Math max/min to set fall backs of either the start or end of the carousel to stop overshooting
+		const nextIndex =
+			direction === "left"
+				? Math.max(indexPosition - scrollJump, 0)
+				: Math.min(indexPosition + scrollJump, itemSizes.length);
+
+		scrollToIndex(nextIndex);
+	};
+
+	return (
+		<div
+			className={clsx(
+				"absolute top-0 bottom-0 flex items-center bg-white z-20 transition-opacity duration-300",
+				isLeft ? "left-0 pr-4" : "right-0 pl-4",
+				disabledDirection && "opacity-0 pointer-events-none"
+			)}
+		>
+			<button
+				className={`${buttonVariants({
+					intent: "handler",
+					hoverable: true,
+					circle: true,
+				})} flex items-center justify-center size-9`}
+				{...disabledBtnAttrs(disabledDirection)}
+				onClick={() => clickScroll(direction)}
+			>
+				<svg
+					className={clsx("size-3", isLeft && "rotate-180")}
+					width="100%"
+					height="100%"
+					viewBox="0 0 26 26"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						fill="#fff"
+						d="M5.997 1.594 7.507.017l12.49 13-12.49 13-1.51-1.568 10.974-11.432L5.997 1.595Z"
+					/>
+				</svg>
+			</button>
+		</div>
+	);
+};

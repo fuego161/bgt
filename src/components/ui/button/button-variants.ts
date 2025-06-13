@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const buttonVariants = cva(
-	"block px-4 py-1 border-zinc-600 border-2 rounded-sm text-center whitespace-nowrap",
+	"block border-zinc-600 border-2 text-center whitespace-nowrap",
 	{
 		variants: {
 			intent: {
@@ -22,8 +22,12 @@ export const buttonVariants = cva(
 				true: "pointer-events-none",
 			},
 			hoverable: {
-				true: "transition-colors hover:bg-zinc-600/80",
+				true: "transition-colors duration-300 hover:bg-zinc-600/80",
 				false: null,
+			},
+			circle: {
+				true: "rounded-full",
+				false: "rounded-sm px-4 py-1",
 			},
 		},
 		defaultVariants: {
@@ -32,6 +36,7 @@ export const buttonVariants = cva(
 			disabled: false,
 			disabledHandler: false,
 			hoverable: true,
+			circle: false,
 		},
 	}
 );
