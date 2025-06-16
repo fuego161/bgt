@@ -1,7 +1,13 @@
+import { BoardGameDetails } from "@/modules/board-game/ui/sections/board-game-details";
+
 interface BoardGameViewProps {
 	slug: string;
 }
 
 export const BoardGameView = ({ slug }: BoardGameViewProps) => {
-	return <>Board Game Details</>;
+	return (
+		<>
+			<BoardGameDetails slug={slug} />
+		</>
+	);
 };
