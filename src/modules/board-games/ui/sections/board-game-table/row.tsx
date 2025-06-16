@@ -1,13 +1,12 @@
 import Link from "next/link";
 
+import { formatPlayerCount } from "@/modules/board-game/shared/format-player-count";
+
 import type { BoardGameListItem } from "@/types/ui/board-game-list";
 
 type RowProps =
 	| { type: "message"; message: string }
 	| { type: "game"; game: BoardGameListItem };
-
-const formatPlayerCount = (min: number, max: number): string =>
-	min === max ? `${max}` : `${min} - ${max}`;
 
 export const BoardGameRow = (props: RowProps) => {
 	const articleStyles =
