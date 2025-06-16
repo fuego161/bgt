@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import type { BoardGameListItem } from "@/types/ui/board-game-list";
 
 type RowProps =
@@ -26,7 +28,7 @@ export const BoardGameRow = (props: RowProps) => {
 	return (
 		<article role="listitem" className={articleStyles}>
 			<h2 className="text-sm font-semibold sm:col-span-2">
-				{game.title}
+				<Link href={`board-games/${game.slug}`}>{game.title}</Link>
 			</h2>
 
 			<p className="text-sm">{game.designerName}</p>
