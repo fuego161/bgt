@@ -53,7 +53,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 
 	useEffect(() => {
 		if (ref.current && type !== "loader") {
-			const width = ref.current.offsetWidth;
+			const width = ref.current.getBoundingClientRect().width;
 			collectSize(index)(width);
 		}
 	}, [type, collectSize, index]);

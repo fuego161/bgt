@@ -250,7 +250,7 @@ export const Carousel = (props: CarouselProps) => {
 					style={{
 						transform: `translateX(-${scrollPosition}px)`,
 					}}
-					className="flex items-center py-2 transition-transform ease-in-out scroll-smooth px-0.5"
+					className="flex items-center py-2 transition-transform ease-in-out scroll-smooth"
 					ref={ulElementRef}
 				>
 					{carouselItems}
