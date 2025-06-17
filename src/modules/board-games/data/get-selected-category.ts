@@ -1,6 +1,10 @@
 import prisma from "@/lib/prisma";
 
-export const getSelectedCategory = (category?: string) => {
+import type { SelectedCategory } from "@/types/ui/selected-category";
+
+export const getSelectedCategory = (
+	category?: string
+): Promise<SelectedCategory> | null => {
 	return category
 		? prisma.category.findUnique({
 				select: {
