@@ -10,3 +10,12 @@ export type BoardGameData = Pick<
 	| "minPlayers"
 	| "maxPlayers"
 >;
+
+export type BoardGameDataIncludes = BoardGameData & {
+	boardGameCategories?: {
+		categoryId: number;
+	}[];
+	boardGameMechanics?: {
+		mechanicId: number;
+	}[];
+};
