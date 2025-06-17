@@ -1,6 +1,7 @@
 import { getBoardGame } from "@/modules/board-game/data/get-board-game";
 import { BoardGameDetailsCategories } from "@/modules/board-game/ui/sections/board-game-details/categories";
 import { BoardGameDetailsGame } from "@/modules/board-game/ui/sections/board-game-details/game-details";
+import { BoardGameDetailsMechanics } from "@/modules/board-game/ui/sections/board-game-details/mechanics";
 
 import type { BoardGameDataIncludes } from "@/types/ui/board-game-data";
 
@@ -17,6 +18,7 @@ export const BoardGameDetailsOutput = async ({
 		<article className="rounded-sm bg-amber-50">
 			<BoardGameDetailsGame game={game} />
 			<BoardGameDetailsCategories game={game} />
+			<BoardGameDetailsMechanics game={game} />
 		</article>
 	);
 };
