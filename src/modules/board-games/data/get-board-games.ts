@@ -1,7 +1,11 @@
 import prisma from "@/lib/prisma";
-import { SelectedCategory } from "@/types/ui/selected-category";
 
-export const getBoardGames = (selectedCategory?: SelectedCategory) => {
+import type { BoardGameData } from "@/types/ui/board-game-data";
+import type { SelectedCategory } from "@/types/ui/selected-category";
+
+export const getBoardGames = (
+	selectedCategory?: SelectedCategory
+): Promise<BoardGameData[]> => {
 	return prisma.boardGame.findMany({
 		select: {
 			id: true,

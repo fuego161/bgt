@@ -1,6 +1,6 @@
 import type { BoardGame } from "@prisma/client";
 
-export type BoardGameListItem = Pick<
+export type BoardGameData = Pick<
 	BoardGame,
 	| "id"
 	| "title"

@@ -2,11 +2,11 @@ import Link from "next/link";
 
 import { formatPlayerCount } from "@/modules/board-game/shared/format-player-count";
 
-import type { BoardGameListItem } from "@/types/ui/board-game-list";
+import type { BoardGameData } from "@/types/ui/board-game-data";
 
 type RowProps =
 	| { type: "message"; message: string }
-	| { type: "game"; game: BoardGameListItem };
+	| { type: "game"; game: BoardGameData };
 
 export const BoardGameRow = (props: RowProps) => {
 	const articleStyles =

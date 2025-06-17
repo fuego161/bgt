@@ -3,7 +3,7 @@ import { getSelectedCategory } from "@/modules/board-games/data/get-selected-cat
 import { BoardGameRow } from "@/modules/board-games/ui/sections/board-game-table/row";
 import { BoardGameTableStructure } from "@/modules/board-games/ui/sections/board-game-table/table-structure";
 
-import type { BoardGameListItem } from "@/types/ui/board-game-list";
+import type { BoardGameData } from "@/types/ui/board-game-data";
 import type { SelectedCategory } from "@/types/ui/selected-category";
 
 interface BoardGameTableRowsProps {
@@ -25,9 +25,7 @@ export const BoardGameTableRows = async ({
 		);
 	}
 
-	const boardGames: BoardGameListItem[] = await getBoardGames(
-		selectedCategory
-	);
+	const boardGames: BoardGameData[] = await getBoardGames(selectedCategory);
 
 	const rows = boardGames.length ? (
 		boardGames.map((game) => (
