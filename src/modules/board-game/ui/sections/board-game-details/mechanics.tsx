@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { getMechanics } from "@/modules/board-game/data/get-mechanics";
+import { LinkList } from "@/modules/board-game/ui/sections/board-game-details/list-output";
 
 import type { BoardGameDataIncludes } from "@/types/ui/board-game-data";
 
@@ -15,19 +14,9 @@ export const BoardGameDetailsMechanics = async ({
 
 	const mechanics = await getMechanics(game.boardGameMechanics);
 
-	console.log(mechanics);
+	if (!mechanics || mechanics.length === 0) return;
 
 	return (
-		<>
-			<h3 className="text-lg font-semibold">Mechanics</h3>
-
-			<ul>
-				{mechanics.map(({ slug, title }) => (
-					<li key={slug}>
-						<Link href={`/categories/${slug}`}>{title}</Link>
-					</li>
-				))}
-			</ul>
-		</>
+		<LinkList sectionTitle="Mechanics" path="mechanics" items={mechanics} />
 	);
 };

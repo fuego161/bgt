@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { getCategories } from "@/modules/board-game/data/get-categories";
+import { LinkList } from "@/modules/board-game/ui/sections/board-game-details/list-output";
 
 import type { BoardGameDataIncludes } from "@/types/ui/board-game-data";
 
@@ -15,19 +14,13 @@ export const BoardGameDetailsCategories = async ({
 
 	const categories = await getCategories(game.boardGameCategories);
 
-	console.log(categories);
+	if (!categories || categories.length === 0) return;
 
 	return (
-		<>
-			<h3 className="text-lg font-semibold">Categories</h3>
-
-			<ul>
-				{categories.map(({ slug, title }) => (
-					<li key={slug}>
-						<Link href={`/categories/${slug}`}>{title}</Link>
-					</li>
-				))}
-			</ul>
-		</>
+		<LinkList
+			sectionTitle="Categories"
+			path="categories"
+			items={categories}
+		/>
 	);
 };
