@@ -1,12 +1,11 @@
+import { getAllCategories } from "@/components/data/get-all-categories";
 import { Carousel } from "@/components/ui/carousel";
 import { CategoriesCarouselInteractiveItems } from "@/components/ui/categories-carousel/interactive-items";
-import prisma from "@/lib/prisma";
 
 import type {
 	CarouselItemLinkProps,
 	CarouselItemTypes,
 } from "@/types/ui/carousel";
-import type { Category } from "@prisma/client";
 
 interface CategoriesCarouselItemsProps {
 	type: CarouselItemTypes;
@@ -31,13 +30,7 @@ export const CategoriesCarouselItems = async ({
 	type,
 	category,
 }: CategoriesCarouselItemsProps) => {
-	const categories: Category[] = await prisma.category.findMany({
-		orderBy: [
-			{
-				title: "asc",
-			},
-		],
-	});
+	const categories = await getAllCategories();
 
 	if (!categories.length) {
 		return (
