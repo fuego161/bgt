@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { CategorySummaryLink } from "@/types/ui/category-summary";
 
 export const getCategories = async (
-	categoryIds: {
+	categoryIds?: {
 		categoryId: number;
 	}[]
 ): Promise<CategorySummaryLink[]> => {
@@ -11,10 +11,12 @@ export const getCategories = async (
 			title: true,
 			slug: true,
 		},
-		where: {
-			id: {
-				in: categoryIds.map((category) => category.categoryId),
-			},
-		},
+		where: categoryIds
+			? {
+					id: {
+						in: categoryIds.map((category) => category.categoryId),
+					},
+			  }
+			: undefined,
 	});
 };
