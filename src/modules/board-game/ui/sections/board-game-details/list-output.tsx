@@ -26,8 +26,6 @@ export const LinkList = ({ sectionTitle, path, items }: LinkListProps) => {
 	const overflowView = items.length > overflowCount;
 	const overflowGroupId = `${path}-overflow-links`;
 
-	console.log(items);
-
 	const [secondGroupShowing, setSecondGroupShowing] =
 		useState<boolean>(false);
 
