@@ -18,5 +18,6 @@ export const getCategories = async (
 					},
 			  }
 			: undefined,
+		orderBy: { title: "asc" },
 	});
 };
