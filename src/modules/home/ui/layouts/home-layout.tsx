@@ -4,7 +4,7 @@ interface HomeLayoutProps {
 
 export const HomeLayout = ({ children }: HomeLayoutProps) => {
 	return (
-		<section className="w-full px-14">
+		<section className="w-full">
 			<div className="wrapper">{children}</div>
 		</section>
 	);

@@ -4,7 +4,7 @@ interface BoardGameLayoutProps {
 
 export const BoardGameLayout = ({ children }: BoardGameLayoutProps) => {
 	return (
-		<section className="w-full px-14">
+		<section className="w-full">
 			<div className="wrapper">{children}</div>
 		</section>
 	);
