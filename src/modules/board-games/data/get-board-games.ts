@@ -1,10 +1,10 @@
 import prisma from "@/lib/prisma";
 
 import type { BoardGameData } from "@/types/ui/board-game-data";
-import type { SelectedCategory } from "@/types/ui/selected-category";
+import type { CategorySummary } from "@/types/ui/category-summary";
 
 export const getBoardGames = (
-	selectedCategory?: SelectedCategory
+	selectedCategory?: CategorySummary | null
 ): Promise<BoardGameData[]> => {
 	return prisma.boardGame.findMany({
 		select: {

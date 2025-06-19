@@ -1,17 +1,14 @@
 import prisma from "@/lib/prisma";
-
-type Category = {
-	title: string;
-	slug: string;
-};
+import { CategorySummary } from "@/types/ui/category-summary";
 
 export const getCategories = async (
 	categoryIds: {
 		categoryId: number;
 	}[]
-): Promise<Category[]> => {
+): Promise<CategorySummary[]> => {
 	return prisma.category.findMany({
 		select: {
+			id: true,
 			title: true,
 			slug: true,
 		},
