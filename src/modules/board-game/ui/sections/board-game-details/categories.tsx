@@ -1,4 +1,4 @@
-import { getCategories } from "@/modules/board-game/data/get-categories";
+import { getCategories } from "@/lib/data/get-categories";
 import { LinkList } from "@/modules/board-game/ui/sections/board-game-details/list-output";
 
 import type { BoardGameDataIncludes } from "@/types/ui/board-game-data";

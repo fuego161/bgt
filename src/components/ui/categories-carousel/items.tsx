@@ -1,6 +1,6 @@
-import { getAllCategories } from "@/components/data/get-all-categories";
 import { Carousel } from "@/components/ui/carousel";
 import { CategoriesCarouselInteractiveItems } from "@/components/ui/categories-carousel/interactive-items";
+import { getCategories } from "@/lib/data/get-categories";
 
 import type {
 	CarouselItemLinkProps,
@@ -30,7 +30,7 @@ export const CategoriesCarouselItems = async ({
 	type,
 	category,
 }: CategoriesCarouselItemsProps) => {
-	const categories = await getAllCategories();
+	const categories = await getCategories();
 
 	if (!categories.length) {
 		return (
