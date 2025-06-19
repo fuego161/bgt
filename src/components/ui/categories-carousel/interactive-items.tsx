@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { Carousel } from "@/components/ui/carousel";
 
 import type { CarouselItemHandlerProps } from "@/types/ui/carousel";
-import type { Category } from "@prisma/client";
+import type { CategorySummaryLink } from "@/types/ui/category-summary";
 
 interface CategoriesCarouselInteractiveItemsProps {
-	categories: Category[];
+	categories: CategorySummaryLink[];
 	category?: string;
 }
 
