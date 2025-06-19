@@ -29,6 +29,7 @@ export class Seeder {
 	 * @returns A lowercased, "slugified" string
 	 */
 	static slugify(title: string, separator = "-"): string {
+		// TODO: If separator present in string, replace
 		return title
 			.trim()
 			.normalize("NFC")

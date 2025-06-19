@@ -7,6 +7,7 @@ interface BoardGameDetailsProps {
 	slug: string;
 }
 
+// TODO: Update Skeleton once layout configured
 export const BoardGameDetails = ({ slug }: BoardGameDetailsProps) => {
 	return (
 		<ErrorBoundary fallback={<p>Error...</p>}>
