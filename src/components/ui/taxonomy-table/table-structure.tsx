@@ -1,10 +1,10 @@
-interface CategoryTableStructureProps {
+interface TaxonomyTableStructureProps {
 	children: React.ReactNode;
 }
 
-export const CategoryTableStructure = ({
+export const TaxonomyTableStructure = ({
 	children,
-}: CategoryTableStructureProps) => (
+}: TaxonomyTableStructureProps) => (
 	<section
 		className="grid w-full sm:grid-cols-2 md:grid-cols-3"
 		aria-label="List of categories"

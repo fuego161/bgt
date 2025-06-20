@@ -1,5 +1,5 @@
-import { CategoryTable } from "@/modules/categories/ui/sections/category-table";
+import { TaxonomyTable } from "@/components/ui/taxonomy-table";
 
 export const CategoriesView = () => {
-	return <CategoryTable />;
+	return <TaxonomyTable taxonomy="category" />;
 };

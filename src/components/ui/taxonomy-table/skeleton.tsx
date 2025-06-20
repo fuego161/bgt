@@ -1,10 +1,10 @@
-import { CategoryTableStructure } from "@/modules/categories/ui/sections/category-table/table-structure";
+import { TaxonomyTableStructure } from "@/components/ui/taxonomy-table/table-structure";
 
-export const CategoryTableSkeleton = () => {
+export const TaxonomyTableSkeleton = () => {
 	const placeHolderStyles = "block bg-zinc-400 h-6 rounded-sm animate-pulse";
 
 	return (
-		<CategoryTableStructure>
+		<TaxonomyTableStructure>
 			{Array.from({ length: 20 }).map((_, index) => (
 				<article
 					key={index}
@@ -14,6 +14,6 @@ export const CategoryTableSkeleton = () => {
 					<span className={placeHolderStyles}></span>
 				</article>
 			))}
-		</CategoryTableStructure>
+		</TaxonomyTableStructure>
 	);
 };
