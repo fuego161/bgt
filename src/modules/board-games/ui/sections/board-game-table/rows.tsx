@@ -1,5 +1,5 @@
+import { getCategory } from "@/lib/data/get-category";
 import { getBoardGames } from "@/modules/board-games/data/get-board-games";
-import { getSelectedCategory } from "@/modules/board-games/data/get-selected-category";
 import { BoardGameRow } from "@/modules/board-games/ui/sections/board-game-table/row";
 import { BoardGameTableStructure } from "@/modules/board-games/ui/sections/board-game-table/table-structure";
 
@@ -13,7 +13,7 @@ interface BoardGameTableRowsProps {
 export const BoardGameTableRows = async ({
 	category,
 }: BoardGameTableRowsProps) => {
-	const selectedCategory: CategorySummary | null = await getSelectedCategory(
+	const selectedCategory: CategorySummary | null = await getCategory(
 		category
 	);
 
