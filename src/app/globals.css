@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+:root {
+	--c-main: #457B9D;
+	--c-light: #E5F4F5;
+	--c-headers: #1D3557;
+	--c-body: #34252F;
+}
+
+@theme inline {
+	--color-main: var(--c-main);
+	--color-light: var(--c-light);
+	--color-headers: var(--c-headers);
+	--color-body: var(--c-body);
+}
