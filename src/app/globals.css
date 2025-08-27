@@ -39,17 +39,28 @@ a,
 ul,
 li,
 input,
+button,
 option,
 textarea,
 select,
 label,
-blockquote,
-.btn {
-	color: var(--c-body);
+blockquote {
 	font-size: .95rem;
 	font-weight: 400;
 	letter-spacing: .35px;
 	line-height: 1.75;
+}
+
+p,
+ul,
+li,
+input,
+option,
+textarea,
+select,
+label,
+blockquote {
+	color: var(--c-body);
 }
 
 p {
@@ -70,12 +81,12 @@ strong {
 	ul,
 	li,
 	input,
+	button,
 	option,
 	textarea,
 	select,
 	label,
-	blockquote,
-	.btn {
+	blockquote {
 		font-size: 1rem;
 	}
 }
@@ -86,12 +97,12 @@ strong {
 	ul,
 	li,
 	input,
+	button,
 	option,
 	textarea,
 	select,
 	label,
-	blockquote,
-	.btn {
+	blockquote {
 		font-size: 1.05rem;
 	}
 }

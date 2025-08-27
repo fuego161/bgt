@@ -76,10 +76,8 @@ export const DirectionalButtons = ({
 		>
 			<button
 				className={`${buttonVariants({
-					intent: "handler",
-					hoverable: true,
 					circle: true,
-				})} flex items-center justify-center size-9`}
+				})} flex items-center justify-center size-9 group`}
 				disabled={disabledDirection}
 				aria-disabled={disabledDirection}
 				aria-hidden={disabledDirection}
@@ -94,7 +92,7 @@ export const DirectionalButtons = ({
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path
-						fill="#fff"
+						className="transition-colors duration-300 fill-white group-hover:fill-main"
 						d="M5.997 1.594 7.507.017l12.49 13-12.49 13-1.51-1.568 10.974-11.432L5.997 1.595Z"
 					/>
 				</svg>

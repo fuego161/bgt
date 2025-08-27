@@ -83,7 +83,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 			return itemWrapper(
 				<span
 					className={buttonVariants({
-						intent: "primary",
+						intent: "secondary",
 						disabled: true,
 						hoverable: false,
 					})}
@@ -100,7 +100,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 
 			return itemWrapper(
 				<Link
-					className={buttonVariants({ intent: "primary" })}
+					className={buttonVariants({ intent: "secondary" })}
 					href={{
 						pathname,
 						query,
@@ -121,12 +121,16 @@ export const CarouselItem = (props: CarouselItemProps) => {
 		const active =
 			initialItem === slug || (title === "All" && !initialItem);
 
+		console.log({ title, active });
+
 		return itemWrapper(
 			<button
 				className={buttonVariants({
-					intent: "handler",
+					intent: "secondary",
 					active,
+					handler: !active,
 					disabledHandler: active,
+					hoverable: !active,
 				})}
 				onClick={() => onSelect?.(slug)}
 				disabled={active}
