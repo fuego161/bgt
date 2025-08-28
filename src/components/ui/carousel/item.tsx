@@ -62,8 +62,11 @@ export const CarouselItem = (props: CarouselItemProps) => {
 		return itemWrapper(
 			<button
 				className={buttonVariants({
-					intent: "skeleton",
+					intent: "secondary",
 					hoverable: false,
+					handler: false,
+					disabled: true,
+					skeleton: true,
 				})}
 				disabled
 				aria-disabled="true"
@@ -86,6 +89,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 						intent: "secondary",
 						disabled: true,
 						hoverable: false,
+						handler: false,
 					})}
 				>
 					{title}

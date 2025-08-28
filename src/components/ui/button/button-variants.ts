@@ -7,7 +7,6 @@ export const buttonVariants = cva(
 			intent: {
 				primary: null,
 				secondary: null,
-				skeleton: "w-[100px] animate-pulse",
 			},
 			active: {
 				true: null,
@@ -27,6 +26,10 @@ export const buttonVariants = cva(
 			},
 			hoverable: {
 				true: null,
+				false: null,
+			},
+			skeleton: {
+				true: "w-[100px] animate-pulse",
 				false: null,
 			},
 			circle: {
@@ -80,6 +83,7 @@ export const buttonVariants = cva(
 			handler: true,
 			disabledHandler: false,
 			hoverable: true,
+			skeleton: false,
 			circle: false,
 		},
 	}
