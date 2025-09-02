@@ -14,7 +14,6 @@ export class CategorySeed extends Seeder {
 			{ ...CategorySeed.generateTitleWithSlug("Card Game") },
 			{ ...CategorySeed.generateTitleWithSlug("City Building") },
 			{ ...CategorySeed.generateTitleWithSlug("Civilization") },
-			{ ...CategorySeed.generateTitleWithSlug("Civilization") },
 			{ ...CategorySeed.generateTitleWithSlug("Comic Book / Strip") },
 			{ ...CategorySeed.generateTitleWithSlug("Deduction") },
 			{ ...CategorySeed.generateTitleWithSlug("Economic") },
