@@ -28,6 +28,7 @@ model BoardGame {
     designerName        String // Will expand into profiles later
     minPlayers          Int
     maxPlayers          Int
+    isFeatured          Boolean             @default(false)
     createdAt           DateTime            @default(now())
     modifiedAt          DateTime            @default(now()) @updatedAt
     deletedAt           DateTime?

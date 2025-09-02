@@ -46,6 +46,7 @@ async function main() {
 					designerName: game.designerName,
 					minPlayers: game.minPlayers,
 					maxPlayers: game.maxPlayers,
+					isFeatured: game.isFeatured,
 				},
 			})
 		)

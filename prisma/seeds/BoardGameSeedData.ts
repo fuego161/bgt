@@ -9,6 +9,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Cole Wehrle",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["science-fiction", "space-exploration", "wargame"],
 		mechanicSlugs: [
 			"area-majority-influence",
@@ -29,6 +30,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Rena Nathanson",
 		minPlayers: 1,
 		maxPlayers: 8,
+		isFeatured: false,
 		categorySlugs: ["real-time", "word-game"],
 		mechanicSlugs: ["race", "spelling", "tile-placement"],
 	},
@@ -38,6 +40,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Reiner Knizia",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: true,
 		categorySlugs: ["abstract-strategy"],
 		mechanicSlugs: [
 			"area-majority-influence",
@@ -57,6 +60,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Bill Cooke",
 		minPlayers: 1,
 		maxPlayers: 8,
+		isFeatured: false,
 		categorySlugs: ["real-time", "word-game"],
 		mechanicSlugs: ["dice-rolling", "spelling"],
 	},
@@ -68,6 +72,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: true,
 		categorySlugs: ["card-game", "fantasy", "video-game"],
 		mechanicSlugs: [
 			"hand-management",
@@ -82,6 +87,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: [
 			"card-game",
 			"city-building",
@@ -102,6 +108,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: [
 			"card-game",
 			"expansion-for-base-game",
@@ -122,6 +129,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: [
 			"card-game",
 			"city-building",
@@ -142,6 +150,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Gavan Brown",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: true,
 		categorySlugs: [
 			"economic",
 			"industry-manufacturing",
@@ -169,6 +178,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Muneyuki Yokouch",
 		minPlayers: 2,
 		maxPlayers: 5,
+		isFeatured: false,
 		categorySlugs: ["animals", "card-game"],
 		mechanicSlugs: ["hand-management", "predictive-bid", "trick-taking"],
 	},
@@ -180,6 +190,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Paul Dennen",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -199,6 +210,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Paul Dennen",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: true,
 		categorySlugs: ["adventure", "fantasy"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -227,6 +239,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "John Yianni",
 		minPlayers: 2,
 		maxPlayers: 2,
+		isFeatured: false,
 		categorySlugs: ["abstract-strategy", "animals"],
 		mechanicSlugs: ["hexagon-grid", "pieces-as-map", "tile-placement"],
 	},
@@ -238,6 +251,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Jay Moriarty",
 		minPlayers: 2,
 		maxPlayers: 6,
+		isFeatured: false,
 		categorySlugs: ["deduction", "murder-mystery", "novel-based"],
 		mechanicSlugs: [
 			"deduction",
@@ -251,6 +265,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Andrew Bryceson",
 		minPlayers: 4,
 		maxPlayers: 8,
+		isFeatured: false,
 		categorySlugs: ["party-game", "trivia", "word-game"],
 		mechanicSlugs: ["team-based-game"],
 	},
@@ -260,6 +275,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Uwe Rosenberg",
 		minPlayers: 2,
 		maxPlayers: 7,
+		isFeatured: true,
 		categorySlugs: ["card-game", "farming", "negotiation"],
 		mechanicSlugs: [
 			"hand-management",
@@ -275,6 +291,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
+		isFeatured: false,
 		categorySlugs: ["city-building", "territory-building"],
 		mechanicSlugs: ["area-majority-influence", "tile-placement"],
 	},
@@ -284,6 +301,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
+		isFeatured: false,
 		categorySlugs: [
 			"city-building",
 			"expansion-for-base-game",
@@ -299,6 +317,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
+		isFeatured: false,
 		categorySlugs: [
 			"expansion-for-base-game",
 			"city-building",
@@ -312,6 +331,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
+		isFeatured: false,
 		categorySlugs: [
 			"city-building",
 			"expansion-for-base-game",
@@ -327,6 +347,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Paul Dennen",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["expansion-for-base-game", "science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -344,6 +365,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Andy Clautice",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["expansion-for-base-game", "science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -361,6 +383,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Evan Lorentz",
 		minPlayers: 2,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["expansion-for-base-game", "science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -378,6 +401,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Jean-Louis Roubira",
 		minPlayers: 3,
 		maxPlayers: 8,
+		isFeatured: true,
 		categorySlugs: ["card-game", "party-game"],
 		mechanicSlugs: ["race", "storytelling", "voting"],
 	},
@@ -387,6 +411,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Paul Dennen",
 		minPlayers: 1,
 		maxPlayers: 6,
+		isFeatured: true,
 		categorySlugs: [
 			"expansion-for-base-game",
 			"movies-tv-radio",
@@ -407,6 +432,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Paul Dennen",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: [
 			"expansion-for-base-game",
 			"movies-tv-radio",
@@ -431,6 +457,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Paul Dennen",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: [
 			"expansion-for-base-game",
 			"movies-tv-radio",
@@ -454,6 +481,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "James A. Wilson",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: true,
 		categorySlugs: ["animals", "card-game", "city-building", "fantasy"],
 		mechanicSlugs: [
 			"contracts",
@@ -475,6 +503,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 99,
+		isFeatured: false,
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -486,6 +515,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["murder-mystery", "puzzle"],
 		mechanicSlugs: [
 			"cooperative-game",
@@ -502,6 +532,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["deduction", "murder-mystery", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game", "deduction"],
 	},
@@ -511,6 +542,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -522,6 +554,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -533,6 +566,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["deduction", "murder-mystery"],
 		mechanicSlugs: ["cooperative-game", "deduction"],
 	},
@@ -542,6 +576,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 6,
+		isFeatured: false,
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -551,6 +586,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -560,6 +596,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["deduction", "puzzle"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -569,6 +606,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Jeroen Doumen",
 		minPlayers: 2,
 		maxPlayers: 5,
+		isFeatured: true,
 		categorySlugs: ["economic", "industry-manufacturing"],
 		mechanicSlugs: [
 			"delayed-purchase",
@@ -586,6 +624,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Asger Harding Granerud",
 		minPlayers: 1,
 		maxPlayers: 6,
+		isFeatured: true,
 		categorySlugs: ["racing", "sports"],
 		mechanicSlugs: [
 			"catch-the-leader",
@@ -606,6 +645,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Kevin Spak",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["comic-book-strip"],
 		mechanicSlugs: [
 			"cooperative-game",
@@ -620,6 +660,7 @@ export const boardGameData: BoardGameSeedData[] = [
 		designerName: "Frank West",
 		minPlayers: 1,
 		maxPlayers: 4,
+		isFeatured: false,
 		categorySlugs: ["animals", "fantasy", "nautical", "puzzle"],
 		mechanicSlugs: [
 			"closed-drafting",

@@ -5,6 +5,7 @@ export interface BoardGameSeedData {
 	designerName: string;
 	minPlayers: number;
 	maxPlayers: number;
+	isFeatured: boolean;
 	categorySlugs: string[];
 	mechanicSlugs: string[];
 }
