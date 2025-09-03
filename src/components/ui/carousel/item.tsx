@@ -6,10 +6,12 @@ import { useEffect, useRef } from "react";
 import { buttonVariants } from "@/components/ui/button/button-variants";
 
 import type {
-	CarouselItemHandlerProps,
 	CarouselItemLinkProps,
+	CarouselItemHandlerProps,
+	CarouselItemCardProps,
 } from "@/types/ui/carousel";
 import type { ReactElement } from "react";
+import { CarouselCard } from "@/components/ui/carousel/card";
 
 interface CarouselItemPropsBase {
 	gapSize: number;
@@ -25,6 +27,13 @@ type CarouselItemPropsVariant =
 	| {
 			type: "handler";
 			data: CarouselItemHandlerProps;
+			initialItem?: string;
+			collectSize: (index: number) => (size: number) => void;
+			index: number;
+	  }
+	| {
+			type: "card";
+			data: CarouselItemCardProps;
 			initialItem?: string;
 			collectSize: (index: number) => (size: number) => void;
 			index: number;
@@ -125,8 +134,6 @@ export const CarouselItem = (props: CarouselItemProps) => {
 		const active =
 			initialItem === slug || (title === "All" && !initialItem);
 
-		console.log({ title, active });
-
 		return itemWrapper(
 			<button
 				className={buttonVariants({
@@ -146,6 +153,12 @@ export const CarouselItem = (props: CarouselItemProps) => {
 			gapSize,
 			ref
 		);
+	}
+
+	if (type === "card") {
+		const { data } = props;
+
+		return itemWrapper(<CarouselCard data={data} />, gapSize, ref);
 	}
 
 	if (process.env.NODE_ENV === "development") {

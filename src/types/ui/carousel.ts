@@ -1,4 +1,4 @@
-export type CarouselItemTypes = "loader" | "link" | "handler";
+export type CarouselItemTypes = "loader" | "link" | "handler" | "card";
 
 export type CarouselPropsVariant =
 	| {
@@ -15,12 +15,16 @@ export type CarouselPropsVariant =
 			type: "handler";
 			data: CarouselItemHandlerProps[];
 			initialItem?: string;
+	  }
+	| {
+			type: "card";
+			data: CarouselItemCardProps[];
 	  };
 
 type ExpandCarouselProps<T> = T extends { type: infer U }
 	? U extends "loader"
 		? T
-		: U extends "link" | "handler"
+		: U extends "link" | "handler" | "card"
 		? T & { collectSize: (index: number) => (size: number) => void }
 		: never
 	: never;
@@ -43,4 +47,11 @@ export interface CarouselItemHandlerProps {
 	slug: string;
 	disabled?: boolean;
 	onSelect: (value: string | null) => void;
+}
+
+export interface CarouselItemCardProps {
+	title: string;
+	slug: string;
+	imagePath: string;
+	snippet: string;
 }

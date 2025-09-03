@@ -48,4 +48,19 @@ export const CarouselItems = (props: CarouselItemsProps) => {
 			/>
 		));
 	}
+
+	if (type === "card") {
+		const { data, collectSize } = props;
+
+		return data.map((item, index) => (
+			<CarouselItem
+				key={item.slug}
+				type="card"
+				data={item}
+				collectSize={collectSize}
+				index={index}
+				gapSize={gapSize}
+			/>
+		));
+	}
 };
