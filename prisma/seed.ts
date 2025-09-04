@@ -42,11 +42,13 @@ async function main() {
 				create: {
 					title: game.title,
 					slug: game.slug,
+					snippet: game.snippet,
 					publisherName: game.publisherName,
 					designerName: game.designerName,
 					minPlayers: game.minPlayers,
 					maxPlayers: game.maxPlayers,
 					isFeatured: game.isFeatured,
+					imagePath: game.imagePath,
 				},
 			})
 		)

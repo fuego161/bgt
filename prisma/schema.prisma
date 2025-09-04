@@ -23,12 +23,14 @@ model User {
 model BoardGame {
     id                  Int                 @id @default(autoincrement())
     title               String
+    snippet             String
     slug                String              @unique @db.VarChar(191)
     publisherName       String // Will expand into profiles later
     designerName        String // Will expand into profiles later
     minPlayers          Int
     maxPlayers          Int
     isFeatured          Boolean             @default(false)
+    imagePath           String // Relative path
     createdAt           DateTime            @default(now())
     modifiedAt          DateTime            @default(now()) @updatedAt
     deletedAt           DateTime?

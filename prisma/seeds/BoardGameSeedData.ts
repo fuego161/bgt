@@ -1,15 +1,41 @@
+import { faker } from "@faker-js/faker";
+
 import { Seeder } from "./Seeder";
 
 import type { BoardGameSeedData } from "@/types/seed/board-game";
 
+const images = [
+	"arcs",
+	"azul",
+	"brass-birmingham",
+	"gloomhaven",
+	"heat",
+	"hero-realms",
+	"the-lord-of-the-rings-fate-of-the-fellowship",
+	"pandemic-legacy",
+	"root",
+	"seti-search-for-extraterrestrial-intelligence",
+];
+
+const getRandomInt = (min: number, max: number) => {
+	const minCeil = Math.ceil(min);
+	const maxFloor = Math.floor(max);
+	return Math.floor(Math.random() * (maxFloor - minCeil) + minCeil); // The maximum is exclusive and the minimum is inclusive
+};
+
+const getRandomImage = () =>
+	`board-games/${images[getRandomInt(0, images.length)]}.png`;
+
 export const boardGameData: BoardGameSeedData[] = [
 	{
 		...Seeder.generateTitleWithSlug("Arcs"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Leder Games",
 		designerName: "Cole Wehrle",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: "board-games/arcs.png",
 		categorySlugs: ["science-fiction", "space-exploration", "wargame"],
 		mechanicSlugs: [
 			"area-majority-influence",
@@ -26,21 +52,25 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Bananagrams"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Bananagrams, Inc.",
 		designerName: "Rena Nathanson",
 		minPlayers: 1,
 		maxPlayers: 8,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["real-time", "word-game"],
 		mechanicSlugs: ["race", "spelling", "tile-placement"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Blue Lagoon"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Blue Orange Games",
 		designerName: "Reiner Knizia",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: ["abstract-strategy"],
 		mechanicSlugs: [
 			"area-majority-influence",
@@ -56,11 +86,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Boggle"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Alga",
 		designerName: "Bill Cooke",
 		minPlayers: 1,
 		maxPlayers: 8,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["real-time", "word-game"],
 		mechanicSlugs: ["dice-rolling", "spelling"],
 	},
@@ -68,11 +100,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Boss Monster: The Dungeon Building Card Game"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: ["card-game", "fantasy", "video-game"],
 		mechanicSlugs: [
 			"hand-management",
@@ -83,11 +117,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Boss Monster 2: The Next Level"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"card-game",
 			"city-building",
@@ -104,11 +140,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Boss Monster: Paper & Pixels"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"card-game",
 			"expansion-for-base-game",
@@ -125,11 +163,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Boss Monster: Tools of Hero-Kind"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Brotherwise Games",
 		designerName: "Johnny O'Neal",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"card-game",
 			"city-building",
@@ -146,11 +186,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Brass: Birmingham"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Roxley",
 		designerName: "Gavan Brown",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: true,
+		imagePath: "board-games/brass-birmingham.png",
 		categorySlugs: [
 			"economic",
 			"industry-manufacturing",
@@ -174,11 +216,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Cat in the Box: Deluxe Edition"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Hobby Japan",
 		designerName: "Muneyuki Yokouch",
 		minPlayers: 2,
 		maxPlayers: 5,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["animals", "card-game"],
 		mechanicSlugs: ["hand-management", "predictive-bid", "trick-taking"],
 	},
@@ -186,11 +230,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Clank! In! Space!: A Deck-Building Adventure"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -206,11 +252,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Clank! Legacy: Acquisitions Incorporated"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: ["adventure", "fantasy"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -235,11 +283,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Hive"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Gen42 Games",
 		designerName: "John Yianni",
 		minPlayers: 2,
 		maxPlayers: 2,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["abstract-strategy", "animals"],
 		mechanicSlugs: ["hexagon-grid", "pieces-as-map", "tile-placement"],
 	},
@@ -247,11 +297,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"221B Baker Street: The Master Detective Game"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Gameology",
 		designerName: "Jay Moriarty",
 		minPlayers: 2,
 		maxPlayers: 6,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "murder-mystery", "novel-based"],
 		mechanicSlugs: [
 			"deduction",
@@ -261,21 +313,25 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Articulate!"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Drumond Park Ltd.",
 		designerName: "Andrew Bryceson",
 		minPlayers: 4,
 		maxPlayers: 8,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["party-game", "trivia", "word-game"],
 		mechanicSlugs: ["team-based-game"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Bohnanza"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "AMIGO",
 		designerName: "Uwe Rosenberg",
 		minPlayers: 2,
 		maxPlayers: 7,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: ["card-game", "farming", "negotiation"],
 		mechanicSlugs: [
 			"hand-management",
@@ -287,21 +343,25 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Carcassonne Big Box 6"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Hans im Glück",
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["city-building", "territory-building"],
 		mechanicSlugs: ["area-majority-influence", "tile-placement"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Carcassonne: Corn Circles II"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: " 999 Games",
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"city-building",
 			"expansion-for-base-game",
@@ -313,11 +373,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Carcassonne: Expansion 5 - Abbey & Mayor"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Hans im Glück",
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"expansion-for-base-game",
 			"city-building",
@@ -327,11 +389,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Carcassonne: The Fruit-Bearing Trees"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Hans im Glück",
 		designerName: "Klaus-Jürgen Wrede",
 		minPlayers: 2,
 		maxPlayers: 6,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"city-building",
 			"expansion-for-base-game",
@@ -343,11 +407,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Clank! In! Space! Adventures: Pulsarcade"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["expansion-for-base-game", "science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -361,11 +427,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Clank! In! Space!: Apocalypse!"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Andy Clautice",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["expansion-for-base-game", "science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -379,11 +447,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Clank! In! Space!: Cyber Station 11"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Evan Lorentz",
 		minPlayers: 2,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["expansion-for-base-game", "science-fiction"],
 		mechanicSlugs: [
 			"deck-bag-and-pool-building",
@@ -397,21 +467,25 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Dixit"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Marie Cardouat",
 		designerName: "Jean-Louis Roubira",
 		minPlayers: 3,
 		maxPlayers: 8,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: ["card-game", "party-game"],
 		mechanicSlugs: ["race", "storytelling", "voting"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Dune: Imperium - Bloodlines"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 1,
 		maxPlayers: 6,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"expansion-for-base-game",
 			"movies-tv-radio",
@@ -428,11 +502,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Dune: Imperium - Immortality"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"expansion-for-base-game",
 			"movies-tv-radio",
@@ -453,11 +529,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Dune: Imperium - Rise of Ix"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Paul Dennen",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: [
 			"expansion-for-base-game",
 			"movies-tv-radio",
@@ -477,11 +555,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Everdell"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Starling Games",
 		designerName: "James A. Wilson",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: ["animals", "card-game", "city-building", "fantasy"],
 		mechanicSlugs: [
 			"contracts",
@@ -499,11 +579,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Exit: The Game - Advent Calendar: The Mystery of the Ice Cave"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 99,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -511,11 +593,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Exit: The Game - Advent Calendar: The Silent Storm"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["murder-mystery", "puzzle"],
 		mechanicSlugs: [
 			"cooperative-game",
@@ -528,21 +612,25 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Exit: The Game - Dead Man on the Orient Express"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "murder-mystery", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game", "deduction"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Exit: The Game - The Abandoned Cabin"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -550,11 +638,13 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Exit: The Game - The Disappearance of Sherlock Holmes"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
@@ -562,51 +652,61 @@ export const boardGameData: BoardGameSeedData[] = [
 		...Seeder.generateTitleWithSlug(
 			"Exit: The Game - The Lord of the Rings: Shadows over Middle-earth"
 		),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "murder-mystery"],
 		mechanicSlugs: ["cooperative-game", "deduction"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Exit: The Game - The Pharaoh's Tomb"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 6,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Exit: The Game - The Polar Station"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "puzzle", "real-time"],
 		mechanicSlugs: ["cooperative-game"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Exit: The Game - The Stormy Flight"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "KOSMOS",
 		designerName: "Inka Brand",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["deduction", "puzzle"],
 		mechanicSlugs: ["cooperative-game"],
 	},
 	{
 		...Seeder.generateTitleWithSlug("Food Chain Magnate"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Splotter Spellen",
 		designerName: "Jeroen Doumen",
 		minPlayers: 2,
 		maxPlayers: 5,
 		isFeatured: true,
+		imagePath: getRandomImage(),
 		categorySlugs: ["economic", "industry-manufacturing"],
 		mechanicSlugs: [
 			"delayed-purchase",
@@ -620,11 +720,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Heat: Pedal to the Metal"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Days of Wonder",
 		designerName: "Asger Harding Granerud",
 		minPlayers: 1,
 		maxPlayers: 6,
 		isFeatured: true,
+		imagePath: "board-games/heat.png",
 		categorySlugs: ["racing", "sports"],
 		mechanicSlugs: [
 			"catch-the-leader",
@@ -641,11 +743,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("Invincible: The Hero-Building Game"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "Dire Wolf",
 		designerName: "Kevin Spak",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["comic-book-strip"],
 		mechanicSlugs: [
 			"cooperative-game",
@@ -656,11 +760,13 @@ export const boardGameData: BoardGameSeedData[] = [
 	},
 	{
 		...Seeder.generateTitleWithSlug("The Isle of Cats"),
+		snippet: faker.lorem.sentence({ min: 10, max: 20 }),
 		publisherName: "The City of Games",
 		designerName: "Frank West",
 		minPlayers: 1,
 		maxPlayers: 4,
 		isFeatured: false,
+		imagePath: getRandomImage(),
 		categorySlugs: ["animals", "fantasy", "nautical", "puzzle"],
 		mechanicSlugs: [
 			"closed-drafting",
