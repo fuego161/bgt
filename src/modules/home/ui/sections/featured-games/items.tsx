@@ -4,35 +4,22 @@ import { Carousel } from "@/components/ui/carousel";
 
 import type { BoardGame } from "@prisma/client";
 import type { CarouselItemCardProps } from "@/types/ui/carousel";
-import { faker } from "@faker-js/faker";
 
-type FeaturedGame = Pick<BoardGame, "id" | "title" | "slug">;
-
-const tempImages = [
-	"arcs",
-	"azul",
-	"gloomhaven",
-	"hero-realms",
-	"pandemic-legacy",
-	"root",
-];
-
-const getRandomInt = (min: number, max: number) => {
-	const minCeil = Math.ceil(min);
-	const maxFloor = Math.floor(max);
-	return Math.floor(Math.random() * (maxFloor - minCeil) + minCeil); // The maximum is exclusive and the minimum is inclusive
-};
+type FeaturedGame = Pick<
+	BoardGame,
+	"id" | "title" | "snippet" | "slug" | "imagePath"
+>;
 
 const toCarouselData = (
 	title: string,
-	slug: string
+	snippet: string,
+	slug: string,
+	imagePath: string
 ): CarouselItemCardProps => ({
 	title,
 	slug,
-	// TODO: Update imagePath to be DB collected
-	imagePath: `/home/${tempImages[getRandomInt(0, 6)]}.png`,
-	// TODO: Update snippet to be DB collected
-	snippet: faker.lorem.sentence({ min: 10, max: 20 }),
+	imagePath,
+	snippet,
 });
 
 export const FeaturedGamesCarouselItems = async () => {
@@ -40,7 +27,9 @@ export const FeaturedGamesCarouselItems = async () => {
 		select: {
 			id: true,
 			title: true,
+			snippet: true,
 			slug: true,
+			imagePath: true,
 		},
 		where: {
 			isFeatured: true,
@@ -60,7 +49,9 @@ export const FeaturedGamesCarouselItems = async () => {
 	const featuredGameCards: CarouselItemCardProps[] = [];
 
 	featuredGameCards.push(
-		...featuredGames.map(({ title, slug }) => toCarouselData(title, slug))
+		...featuredGames.map(({ title, snippet, slug, imagePath }) =>
+			toCarouselData(title, snippet, slug, imagePath)
+		)
 	);
 
 	return (
