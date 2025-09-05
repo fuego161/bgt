@@ -58,6 +58,7 @@ export const FeaturedGamesCarouselItems = async () => {
 		<Carousel
 			ariaLabel="Featured Games"
 			data={featuredGameCards}
+			fixedSize={4}
 			type="card"
 		/>
 	);

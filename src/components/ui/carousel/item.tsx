@@ -15,6 +15,7 @@ import { CarouselCard } from "@/components/ui/carousel/card";
 
 interface CarouselItemPropsBase {
 	gapSize: number;
+	fixedSize?: number | false;
 }
 type CarouselItemPropsVariant =
 	| { type: "loader"; collectSize?: undefined; index?: undefined }
@@ -41,24 +42,71 @@ type CarouselItemPropsVariant =
 
 type CarouselItemProps = CarouselItemPropsBase & CarouselItemPropsVariant;
 
+const widthMap: Record<number, Record<string, string>> = {
+	1: {
+		width: "w-full",
+		min: "min-w-full",
+		max: "max-w-full",
+	},
+	2: {
+		width: "w-1/2",
+		min: "min-w-1/2",
+		max: "max-w-1/2",
+	},
+	3: {
+		width: "w-1/3",
+		min: "min-w-1/3",
+		max: "max-w-1/3",
+	},
+	4: {
+		width: "w-1/4",
+		min: "min-w-1/4",
+		max: "max-w-1/4",
+	},
+	5: {
+		width: "w-1/5",
+		min: "min-w-1/5",
+		max: "max-w-1/5",
+	},
+	6: {
+		width: "w-1/6",
+		min: "min-w-1/6",
+		max: "max-w-1/6",
+	},
+};
+
 const itemWrapper = (
 	item: ReactElement,
 	gapSize: number,
+	fixedSize?: number | false,
 	ref?: React.RefObject<HTMLLIElement | null>
 ): ReactElement => {
+	const fixedWidth = fixedSize
+		? `${widthMap[fixedSize].width} ${widthMap[fixedSize].min} ${widthMap[fixedSize].max}`
+		: "";
+
 	return (
-		<>
-			<li ref={ref} style={{ marginRight: gapSize }}>
-				{item}
-			</li>
-		</>
+		<li
+			ref={ref}
+			className={`${fixedWidth}`}
+			style={{ marginRight: gapSize }}
+		>
+			{item}
+		</li>
 	);
 };
 
 export const CarouselItem = (props: CarouselItemProps) => {
 	const ref = useRef<HTMLLIElement | null>(null);
 
-	const { type, collectSize, index, gapSize } = props;
+	const { type, collectSize, index, gapSize, fixedSize } = props;
+
+	if (type === "card") {
+		console.log({
+			props: props,
+			fixedSize: props.fixedSize,
+		});
+	}
 
 	useEffect(() => {
 		if (ref.current && type !== "loader") {
@@ -84,7 +132,8 @@ export const CarouselItem = (props: CarouselItemProps) => {
 			>
 				&nbsp;
 			</button>,
-			gapSize
+			gapSize,
+			fixedSize
 		);
 	}
 
@@ -104,6 +153,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 					{title}
 				</span>,
 				gapSize,
+				fixedSize,
 				ref
 			);
 		}
@@ -122,6 +172,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 					{title}
 				</Link>,
 				gapSize,
+				fixedSize,
 				ref
 			);
 		}
@@ -151,6 +202,7 @@ export const CarouselItem = (props: CarouselItemProps) => {
 				{title}
 			</button>,
 			gapSize,
+			fixedSize,
 			ref
 		);
 	}
@@ -158,7 +210,12 @@ export const CarouselItem = (props: CarouselItemProps) => {
 	if (type === "card") {
 		const { data } = props;
 
-		return itemWrapper(<CarouselCard data={data} />, gapSize, ref);
+		return itemWrapper(
+			<CarouselCard data={data} />,
+			gapSize,
+			fixedSize,
+			ref
+		);
 	}
 
 	if (process.env.NODE_ENV === "development") {

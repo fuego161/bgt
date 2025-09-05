@@ -14,6 +14,7 @@ interface CarouselPropsBase {
 	gapSize?: GapSizes;
 	scrollJump?: number;
 	activeIndex?: number;
+	fixedSize?: number | false;
 }
 
 type CarouselProps = CarouselPropsBase & CarouselPropsVariant;
@@ -22,6 +23,7 @@ export const Carousel = (props: CarouselProps) => {
 	// Set defaults
 	const gapSize: GapSizes = props.gapSize ?? 12;
 	const scrollJump = props.scrollJump ?? 4;
+	const fixedSize = props.fixedSize ?? false;
 
 	const ulElementRef = useRef<HTMLUListElement>(null);
 
@@ -219,12 +221,13 @@ export const Carousel = (props: CarouselProps) => {
 	 */
 	const carouselItems: ReactElement =
 		props.type === "loader" ? (
-			<CarouselItems {...props} gapSize={gapSize} />
+			<CarouselItems {...props} gapSize={gapSize} fixedSize={fixedSize} />
 		) : (
 			<CarouselItems
 				{...props}
 				collectSize={collectSize}
 				gapSize={gapSize}
+				fixedSize={fixedSize}
 			/>
 		);
 
@@ -250,7 +253,7 @@ export const Carousel = (props: CarouselProps) => {
 					style={{
 						transform: `translateX(-${scrollPosition}px)`,
 					}}
-					className="flex items-center py-2 transition-transform ease-in-out scroll-smooth"
+					className="flex items-center py-2 transition-transform ease-in-out scroll-smooth whitespace-nowrap"
 					ref={ulElementRef}
 				>
 					{carouselItems}

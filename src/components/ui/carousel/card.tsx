@@ -14,11 +14,12 @@ export const CarouselCard = ({ data }: CarouselCardProps) => {
 
 	return (
 		<Link
-			className="block rounded-lg overflow-hidden"
+			className="block rounded-lg overflow-hidden whitespace-normal"
 			href={`board-games/${slug}`}
 		>
 			<Image
 				src={getImageUrl(imagePath)}
+				className="w-full"
 				width={300}
 				height={200}
 				alt={`${title} Featured Image`}
