@@ -68,8 +68,10 @@ export const DirectionalButtons = ({
 	return (
 		<div
 			className={clsx(
-				"absolute top-0 bottom-0 flex items-center bg-white z-20 transition-opacity duration-300",
-				isLeft ? "left-0 pr-4" : "right-0 pl-4",
+				"absolute top-0 bottom-0 flex items-center z-20 transition-opacity duration-300 from-white from-70% to-transparent",
+				isLeft
+					? "left-0 pr-8 bg-gradient-to-r"
+					: "right-0 pl-8 bg-gradient-to-l",
 				disabledDirection && "opacity-0 pointer-events-none"
 			)}
 			ref={buttonContainerRef}
