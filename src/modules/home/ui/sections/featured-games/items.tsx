@@ -46,12 +46,9 @@ export const FeaturedGamesCarouselItems = async () => {
 		);
 	}
 
-	const featuredGameCards: CarouselItemCardProps[] = [];
-
-	featuredGameCards.push(
-		...featuredGames.map(({ title, snippet, slug, imagePath }) =>
+	const featuredGameCards: CarouselItemCardProps[] = featuredGames.map(
+		({ title, snippet, slug, imagePath }) =>
 			toCarouselData(title, snippet, slug, imagePath)
-		)
 	);
 
 	return (

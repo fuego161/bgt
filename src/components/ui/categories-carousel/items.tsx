@@ -42,11 +42,9 @@ export const CategoriesCarouselItems = async ({
 		);
 	}
 
-	const categoryLinks: CarouselItemLinkProps[] = [];
-
 	if (type === "link") {
-		categoryLinks.push(
-			...categories.map(({ title, slug }) => toCarouselData(title, slug))
+		const categoryLinks: CarouselItemLinkProps[] = categories.map(
+			({ title, slug }) => toCarouselData(title, slug)
 		);
 
 		categoryLinks.unshift(toCarouselData("All", ""));
