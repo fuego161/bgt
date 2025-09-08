@@ -14,7 +14,7 @@ export const CarouselCard = ({ data }: CarouselCardProps) => {
 
 	return (
 		<Link
-			className="block rounded-lg overflow-hidden whitespace-normal"
+			className="block h-full rounded-lg bg-light overflow-hidden whitespace-normal"
 			href={`board-games/${slug}`}
 		>
 			<Image
@@ -24,9 +24,9 @@ export const CarouselCard = ({ data }: CarouselCardProps) => {
 				height={200}
 				alt={`${title} Featured Image`}
 			/>
-			<div className="bg-light px-2 py-2">
+			<div className="px-2 py-2 lg:px-3 lg:py-4">
 				<h3>{title}</h3>
-				<p>{snippet}</p>
+				<p className="mt-1 mb-0 lg:text-base!">{snippet}</p>
 			</div>
 		</Link>
 	);

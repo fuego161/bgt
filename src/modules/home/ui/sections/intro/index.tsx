@@ -50,7 +50,7 @@ export const Intro = () => {
 					Track, Explore & Play More
 				</h1>
 
-				<p className="lg:text-lg!">
+				<p className="mt-2 mb-3 lg:text-lg! lg:mt-5 lg:mb-6">
 					Keep tabs on your board game collection, find new
 					favourites, and dive into the mechanics and categories you
 					love. Whether you're a casual player or a cardboard

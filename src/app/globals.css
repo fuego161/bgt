@@ -63,10 +63,6 @@ blockquote {
 	color: var(--c-body);
 }
 
-p {
-	margin: .75em 0;
-}
-
 a {
 	text-decoration: none;
 }

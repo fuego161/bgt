@@ -245,6 +245,9 @@ export const Carousel = (props: CarouselProps) => {
 		/>
 	);
 
+	const alignPosition =
+		props.type === "card" ? "items-start" : "items-center";
+
 	return (
 		<nav aria-label={props.ariaLabel}>
 			<div className="relative overflow-x-hidden">
@@ -253,7 +256,7 @@ export const Carousel = (props: CarouselProps) => {
 					style={{
 						transform: `translateX(-${scrollPosition}px)`,
 					}}
-					className="flex items-center py-2 transition-transform ease-in-out scroll-smooth whitespace-nowrap"
+					className={`flex ${alignPosition} py-2 transition-transform ease-in-out scroll-smooth whitespace-nowrap`}
 					ref={ulElementRef}
 				>
 					{carouselItems}

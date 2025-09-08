@@ -88,7 +88,7 @@ const itemWrapper = (
 	return (
 		<li
 			ref={ref}
-			className={`${fixedWidth}`}
+			className={`${fixedWidth} self-stretch`}
 			style={{ marginRight: gapSize }}
 		>
 			{item}
@@ -100,13 +100,6 @@ export const CarouselItem = (props: CarouselItemProps) => {
 	const ref = useRef<HTMLLIElement | null>(null);
 
 	const { type, collectSize, index, gapSize, fixedSize } = props;
-
-	if (type === "card") {
-		console.log({
-			props: props,
-			fixedSize: props.fixedSize,
-		});
-	}
 
 	useEffect(() => {
 		if (ref.current && type !== "loader") {
