@@ -1,23 +1,18 @@
 import { faker } from "@faker-js/faker";
 import { PrismaClient } from "@prisma/client";
 
+import { OwnershipState } from "@/types/ownership-state";
+
 import type { BoardGameSeedData } from "@/types/seed/board-game";
 import type { BoardGame } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-enum State {
-	Owned = "OWNED",
-	Prev = "PREVIOUSLY_OWNED",
-	Play = "WANT_PLAY",
-	Buy = "WANT_BUY",
-}
-
 interface UserBoardGameData {
 	userId: number;
 	boardGameId: number;
 	rating?: number;
-	status?: State;
+	status?: OwnershipState;
 	notes?: string;
 }
 
@@ -30,7 +25,7 @@ export class UserBoardGameSeed {
 
 	private getRandomStatus(): string {
 		// Create an array of available state keys
-		const stateKeys = Object.keys(State);
+		const stateKeys = Object.keys(OwnershipState);
 		// Get a random state by getting a random number (minus 1 to account for the 0 index)
 		const randomState =
 			stateKeys[this.getRandomCount(stateKeys.length - 1)];
@@ -88,7 +83,9 @@ export class UserBoardGameSeed {
 					userId: user.id,
 					boardGameId: game,
 					rating: this.getRandomCount(5, 1),
-					status: State[this.getRandomStatus() as keyof typeof State],
+					status: OwnershipState[
+						this.getRandomStatus() as keyof typeof OwnershipState
+					],
 					notes: faker.lorem.paragraph({ min: 1, max: 3 }),
 				});
 			}
